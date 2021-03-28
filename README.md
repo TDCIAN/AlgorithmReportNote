@@ -165,10 +165,10 @@ bar = Bar('John')
 bar.speak()
 </code>
 </pre>
-a. I am John
-b. I am JohnYou are John
-c. You are John - 이거
-d. You are Jonhl am John
+<br>a. I am John
+<br>b. I am JohnYou are John
+<br>c. You are John - 이거
+<br>d. You are Jonhl am John
 
 Q2. 다음 중 에러의 종류와 발생 원인을 맞게 나열한 것은?
 a. AttributeError - 모듈, 클래스에 잘못된 속성에 접근했을 때 - 이거

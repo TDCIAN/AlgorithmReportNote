@@ -187,9 +187,9 @@ Q4. 다음 중 객체지향 프로그래밍의 지향점과 다른 것을 고르
 
 Q5. 다음 중 클래스 변수와 인스턴스 변수의 차이를 옳게 서술한 것을 고르시오.
 1. 클래스 변수는 인스턴스를 생성하지 않아도 접근할 수 있다. -> 이거
-1. 인스턴스 변수는 클래스 변수와 같은 이름을 가질 수 없다. -> 가질 수 있음
-1. 클래스 변수와 인스턴스 변수는 생성 방법은 다르지만, 접근하는 방법은 동일하다. -> 접근 방법 다르다
-1. 인스턴스 변수는 인스턴스를 생성한 후에 값을 변경할 수 없다. -> 변경할 수 있는데 권장되진 않음
+1. 인스턴스 변수는 클래스 변수와 같은 이름을 가질 수 없다.
+1. 클래스 변수와 인스턴스 변수는 생성 방법은 다르지만, 접근하는 방법은 동일하다.
+1. 인스턴스 변수는 인스턴스를 생성한 후에 값을 변경할 수 없다.
 
 Q6. 다음 함수에 대한 분석으로 옳은 것을 고르시오.
 
@@ -205,7 +205,7 @@ def int_sum(*args):
 1. 예외처리문이 모든 예외를 처리하도록 되어 있으므로, 해당 함수는 절대 런타임 오류를 발생시키지 않는다.
 1. 입력이 하나만 들어온 경우, for문이 정상 동작하지 않아 error를 출력한다.
 1. 입력이 모두 문자열로 들어온 경우, 정수가 아니기 때문에 error를 출력한다.
-1. 어떠한 입력이 들어와도 무조건 런타임 오류가 발생한다.
+1. 어떠한 입력이 들어와도 무조건 런타임 오류가 발생한다. - 이거
 
 Q7. 다음 폴더 구조를 가진 작업 공간에서 main.py를 실행할 때, foo.py 파일 내에 있는 Foo 클래스를 import하는 구문을 작성하시오.
 <pre>
@@ -216,6 +216,9 @@ Q7. 다음 폴더 구조를 가진 작업 공간에서 main.py를 실행할 때,
 </code>
 </pre>
 
+answer: from pkg.foo import Foo
+
+
 Q8. 아래 빈칸에 현재 날짜와 시간을 표시하는 구문을 작성하시오
 
 ```py
@@ -224,11 +227,17 @@ now = <이곳에 들어갈 코드를 작성하세요>
 print(now) // 결과예시: 2020-07-14 21:24:24.968242
 ```
 
-Q9. 클래스의 __init__ 메소드를 이용하여 생성된 객체를 무엇이라고 하는가? -> instance
+answer: datetime.datetime.now()
+
+Q9. 클래스의 __init__ 메소드를 이용하여 생성된 객체를 무엇이라고 하는가?
+
+answer: 인스턴스
 
 Q10. 파이썬에서는 변수에 객체의 내용을 직접 저장하지 않고, 대신에 객체의 '이것'을 저장한다.
      '이것'을 사용하기 때문에 객체가 예상치 못하게 값이 변화할 수 있어, 깊은 복사를 적절히 사용해야 한다.
      '이것'은 무엇인가?
+
+answer: 참조, reference
 
 
 ### Report 2 (2021/03/25 ~ 2021/03/28)
@@ -247,6 +256,22 @@ csv 파일의 위치는 실행 위치와 동일하다고 가정한다(a.csv).
 1238
 ----------------------------
 ```
+
+답안
+
+```p
+import csv
+with open('./a.csv', 'r') as f:
+    reader = csv.reader(f)
+    sum = 0    
+    for n in reader:
+        for i in n:
+            sum += int(i)
+
+print(sum)
+
+```
+
 과제2.
 아래 기반 코드를 완성하여, 입력받은 값 중 중앙값을 출력하는 클래스를 완성하시오.
 입력받은 값이 짝수개이면, 중앙값 2개의 평균을 출력하시오
@@ -283,6 +308,41 @@ median.show_result()
 4.5
 0.5
 ------------------------------------
+```
+
+답안
+
+```py
+class Median:
+    list_of_num = []
+
+    def __init__(self):
+        self.list_of_num = []
+ 
+    def get_item(self, item):
+        self.list_of_num.append(item)
+ 
+    def clear(self):
+        self.list_of_num = []
+ 
+    def show_result(self):
+        self.list_of_num.sort()
+        len_of_list = len(self.list_of_num)
+        center_of_list = int(len_of_list / 2)
+        if len_of_list % 2 == 1:
+            print(self.list_of_num[center_of_list])
+        else:
+            print((self.list_of_num[center_of_list - 1] + self.list_of_num[center_of_list]) / 2.0)
+ 
+median = Median()
+for x in range(10):
+    median.get_item(x)
+median.show_result()
+ 
+median.clear()
+for x in [0.5, 6.2, -0.4, 9.6, 0.4]:
+    median.get_item(x)
+median.show_result()
 ```
 
 과제3.
@@ -330,6 +390,39 @@ Michael moves like a jagger.
 ---------------------------------
 ```
 
+
+
+```py
+class Animal:
+    def __init__(self, name):
+        self.name = name
+ 
+    def speak(self):
+        print(self.name + ' cannot speak.')
+ 
+    def move(self):
+        print(self.name + ' cannot move.')
+ 
+ 
+class Dog(Animal):
+    def move(self):
+      print(self.name + ' moves like a jagger.')
+ 
+class Retriever(Dog):
+    def speak(self):
+      print(self.name + ' is smart enough to speak.')
+ 
+ 
+dog = Dog('Nancy')
+dog.speak()
+dog.move()
+ 
+super_dog = Retriever('Michael')
+super_dog.speak()
+super_dog.move()
+
+```
+
 과제4.
 아래 기반 코드를 완성하여, 주어진 출력을 하는 클래스를 구현하시오. 단, 하나의 메소드에서는 단 하나의 line만을 출력하시오.
 PEP를 준수하여 코드를 작성하시오.
@@ -351,4 +444,24 @@ B
 C
 D
 ----------------
+```
+
+답안
+
+
+```py
+class Foo:
+  bar = 'A'
+  def __init__(self):
+    self.bar = 'B'
+  
+  class Bar:
+    bar = 'C'
+    def __init__(self):
+      self.bar = 'D'
+  
+print(Foo.bar)
+print(Foo().bar)
+print(Foo.Bar.bar)
+print(Foo.Bar().bar)
 ```

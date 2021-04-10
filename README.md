@@ -616,6 +616,54 @@ print(queue.is_empty())
 
 ```
 
+
+### 강사님 예시답안
+
+```py
+class Node:
+    def __init__(self, data, prev=None, next=None):
+        self.data = data
+        self.prev = prev
+        self.next = next
+ 
+class LinkedQueue:
+    def __init__(self):
+        self.front = None
+        self.rear = None
+ 
+    def is_empty(self):
+        if self.front is None:
+            return True
+        else:
+            return False
+ 
+    def put(self, data):
+        if self.rear is None:
+            self.front = Node(data)
+            self.rear = self.front
+        else:
+            self.rear = Node(data, self.rear, None)
+            self.rear.prev.next = self.rear
+ 
+    def get(self):
+        if self.front is None:
+            return None
+        elif self.front is self.rear:
+            data = self.front.data
+            self.front, self.rear = None, None
+        else:
+            data = self.front.data
+            self.front = self.front.next
+            self.front.prev = None
+        return data
+ 
+    def peek(self):
+        if self.front is None:
+            return None
+        else:
+            return self.front.data
+```
+
 과제 2.
 아래는 Python의 list를 이용하여 Stack을 구현한 것이다. Stack의 특성을 이용하면 후위 표기법으로 작성된 수식을 계산할 수 있다.
 후위 표기법은 연산자를 나중에 표기하는 표기법으로, 아래와 같이 계산한다. 후위 표기법에서 사칙연산의 우선순위는 없다고 가정한다.
@@ -655,6 +703,43 @@ print(calc.calculate('2 5 + 3 * 6 - 5 *'))
 
 ```
 
+
+### 강사님 예시답안
+
+```py
+class Stack:
+    def __init__(self):
+        self.list = list()
+ 
+    def push(self, data):
+        self.list.append(data)
+ 
+    def pop(self):
+        return self.list.pop()
+ 
+class Calculator:
+    def __init__(self):
+        self.stack = Stack()
+ 
+    def calculate(self, string):
+        for x in string.split(' '):
+            if x == '+':
+                self.stack.push(self.stack.pop() + self.stack.pop())
+            elif x == '-':
+                self.stack.push(- self.stack.pop() + self.stack.pop())
+            elif x == '*':
+                self.stack.push(self.stack.pop() * self.stack.pop())
+            elif x == '/':
+                self.stack.push(1 / self.stack.pop() * self.stack.pop())
+            else:
+                self.stack.push(int(x))
+        return self.stack.pop()
+ 
+calc = Calculator()
+print(calc.calculate('4 6 * 2 / 2 +'))
+print(calc.calculate('2 5 + 3 * 6 - 5 *'))
+```
+
 과제 3.
 다음은 Tree 자료구조를 순회하는 방법 중, Pre-order 순회 방법을 설명한 것이다. 자료구조의 순회란, 자료구조에 속한 모든 data를 한 번씩 접근하는 것이다.
 Pre-order 순회를 하면서 순회한 순서대로 Node의 data를 출력하는 preorder() 메소드를 완성하시오.
@@ -681,6 +766,36 @@ class Tree:
   def preorder(self):
     pass
     
+# Test code
+root = Node(5, Node(2, Node(7, Node(4), Node(1)), Node(3)), Node(9, Node(6), Node(10)))
+tree = Tree(root)
+tree.preorder()
+```
+
+
+### 강사님 예시답안
+
+```py
+class Node:
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+ 
+class Tree:
+    def __init__(self, root):
+        self.root = root
+ 
+    def preorder(self):
+        def recursion(node):
+            print(node.data, end=' ')
+            if node.left:
+                recursion(node.left)
+            if node.right:
+                recursion(node.right)
+        recursion(self.root)
+ 
+ 
 # Test code
 root = Node(5, Node(2, Node(7, Node(4), Node(1)), Node(3)), Node(9, Node(6), Node(10)))
 tree = Tree(root)
@@ -737,6 +852,82 @@ print(ht.get('hello'), end=' ')
 print(ht.get('hello2'), end=' ')
 print(ht.get('hello3'), end=' ')
 print(ht.get('hello4'), end=' ')
+```
+
+
+### 강사님 예시답안
+
+```py
+def hash_func(key):
+    return ord(key[0]) % 10
+ 
+class HashTable:
+    def __init__(self):
+        self.table = [None]*10
+ 
+    def set(self, key, value):
+        self.table[hash_func(key)] = value
+ 
+    def get(self, key):
+        return self.table[hash_func(key)]
+ 
+class Node:
+    def __init__(self, key, data):
+        self.key = key
+        self.data = data
+        self.next = None
+ 
+class ChainedHashTable(HashTable):
+    def __init__(self):
+        super().__init__()
+ 
+    def set(self, key, value):
+        idx = self.hash_func(key)
+        if self.table[idx] is None:
+            self.table[idx] = Node(key, value)
+        else:
+            node = self.table[idx]
+            while node.next is not None:
+                if node.key == key:
+                    node.data = value
+                    return
+                node = node.next
+            node.next = Node(key, value)
+ 
+    def get(self, key):
+        idx = self.hash_func(key)
+        if self.table[idx] is None:
+            return None
+        else:
+            node = self.table[idx]            
+            while node.next is not None:
+                if node.key == key:
+                    return node.data
+                node = node.next
+            if node.key == key:
+                return node.data
+            else:
+                return None
+ 
+ht = ChainedHashTable()
+ht.set('hello', 1)
+ht.set('hello2', 2)
+ht.set('hello3', 3)
+ht.set('hello4', 4)
+ 
+print(ht.get('hello'), end=' ')
+print(ht.get('hello2'), end=' ')
+print(ht.get('hello3'), end=' ')
+print(ht.get('hello4'), end=' ')
+print()
+ 
+ht.set('hello2', 5)
+ 
+print(ht.get('hello'), end=' ')
+print(ht.get('hello2'), end=' ')
+print(ht.get('hello3'), end=' ')
+print(ht.get('hello4'), end=' ')
+
 ```
 
 ### Quiz 4 (2021/04/08 ~ 2021/04/11)

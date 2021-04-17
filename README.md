@@ -1065,6 +1065,81 @@ print(pq.get())
 
 ```
 
+답안
+```py
+
+class PriorityQueue:
+    def __init__(self):
+        self.tree = [None]
+ 
+    def is_empty(self):
+        return len(self.tree) == 1
+ 
+    def put(self, data):
+        self.tree.append(data)
+        curr = len(self.tree) - 1
+        parent = curr // 2
+        while parent > 0:
+            if self.tree[curr][0] > self.tree[parent][0]:
+                return
+            self.tree[curr], self.tree[parent] = self.tree[parent], self.tree[curr]
+            curr = parent
+            parent = curr // 2
+ 
+    def get(self):
+        if self.is_empty() is True:
+            return None
+        data = self.tree[1]
+        self.tree[1] = self.tree[-1]
+        self.tree = self.tree[:-1]
+        curr = 1
+        while curr < len(self.tree):
+            left = curr * 2
+            right = curr * 2 + 1
+            if left < len(self.tree) and right < len(self.tree):
+                if self.tree[left][0] < self.tree[right][0]:
+                    if self.tree[left][0] < self.tree[curr][0]:
+                        self.tree[curr], self.tree[left] = self.tree[left], self.tree[curr]
+                        curr = left
+                else:
+                    if self.tree[right][0] < self.tree[curr][0]:
+                        self.tree[curr], self.tree[right] = self.tree[right], self.tree[curr]
+                        curr = right
+ 
+            elif left < len(self.tree) and self.tree[left][0] < self.tree[curr][0]:
+                self.tree[curr], self.tree[left] = self.tree[left], self.tree[curr]
+                curr = left
+            elif right < len(self.tree) and self.tree[right][0] < self.tree[curr][0]:
+                self.tree[curr], self.tree[right] = self.tree[right], self.tree[curr]
+                curr = right
+            else:
+                break
+        return data
+ 
+    def peek(self):
+        if self.is_empty() is True:
+            return None
+        return self.tree[1]
+ 
+pq = PriorityQueue()
+pq.put((0, 'a'))
+pq.put((5, 'b'))
+pq.put((2, 'c'))
+pq.put((1, 'd'))
+pq.put((3, 'e'))
+pq.put((4, 'f'))
+ 
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
+
+```
+
+
 과제2.
 <br> 오름차순으로 정렬된 N개의 정수를 가진 List가 주어져있을 때, 해당 List에 존재하는 서로 다른 값이 몇 가지인지 알아내는 알고리즘을 구현하라.
 <br> 알고리즘의 제약사항은 아래와 같다. (알고리즘은 1 <= N <= 10000에서 테스트된다)
@@ -1081,6 +1156,23 @@ print(countUniques([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])) # 2
 
 ```
 
+
+답안
+```py
+def countUniques(a):
+    last_el = None
+    count = 0
+    for el in a:
+        if last_el != el:
+            count += 1
+        last_el = el
+    return count
+ 
+print(countUniques([-1, 1, 1, 1, 1, 4, 4, 4, 4, 10, 14, 14])) # 5
+print(countUniques([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])) # 2
+```
+
+
 과제3
 <br> N개의 문자열로 이루어진 List에서 전체 문자열이 앞 n개 문자열이 같다고 할 때, 가장 큰 n을 출력하는 알고리즘을 구현하라.
 <br> (즉, 주어진 모든 문자열의 앞의 몇개의 문자가 일치하는지 출력하라)
@@ -1094,6 +1186,31 @@ print(solution(['abcd', 'abce', 'abchg', 'abcfwqw', 'abcdfg'])) # 3
 print(solution(['abcd', 'gbce', 'abchg', 'abcfwqw', 'abcdfg'])) # 0
 
 ```
+
+
+
+답안
+```py
+def solution(a):
+    count = 0
+    w = a[0]
+    for idx, c in enumerate(w):
+        is_match = True
+        for w_ in a:
+            if c != w_[idx]:
+                is_match = False
+                break
+        if is_match is True:
+            count += 1
+        else:
+            break
+    return count
+ 
+print(solution(['abcd', 'abce', 'abchg', 'abcfwqw', 'abcdfg'])) # 3
+print(solution(['abcd', 'gbce', 'abchg', 'abcfwqw', 'abcdfg'])) # 0
+```
+
+
 
 과제4.
 <br> 자연수 중, 각 자리수를 제곱한 것을 더하는 과정을 반복했을 때 1로 끝나는 수를 '행복한 수'라고 한다.
@@ -1117,6 +1234,29 @@ def solution(n):
 print(solution(19)) # True
 print(solution(61)) # False
 
+```
+
+
+
+답안
+```py
+def solution(n):
+    def calc_value(m):
+        val = 0
+        for c in str(m):
+            val += int(c) ** 2
+        return val
+ 
+    hist = set()
+    while n != 1:
+        hist.add(n)
+        n = calc_value(n)
+        if n in hist:
+            return False
+    return True
+ 
+print(solution(19)) # True
+print(solution(61)) # False
 ```
 
 
@@ -1222,3 +1362,110 @@ print(quicksort(data_list))
 Q10. 최소 신장 트리를 구하는 알고리즘 중 하나로, 전체 그래프에서 최소비용인 간선을 하나씩 추가해 나가는 알고리즘의 이름을 쓰시오.
 
 -> 크루스칼 
+
+
+
+### Report 5 (2021/04/15 ~ 2021/04/18)
+
+과제1.
+이진 탐색법은 정렬된 자료를 탐색하는 데에 사용할 수 있다. 인덱스가 낮을 수록 더 작은 값으로 정렬된 2차원 리스트에서 target을 찾으면 True를 반환하고,
+target에서 찾을 수 없으면 False를 반환하는 프로그램을 작성하시오
+
+예시입력1
+```py
+matrix = [
+  [1, 3, 5, 7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 50]
+]
+target = 3
+출력: True
+```
+
+
+예시입력2
+```py
+matrix = [
+  [1, 3, 5, 7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 50]
+]
+target = 13
+출력: False
+```
+
+```py
+def searchMatrix(matrix, target):
+  pass
+```
+
+
+과제2.
+두 문자열 A와 B가 있을 때, 두 문자열의 '최대공약문자열' C를 아래와 같이 정의하자.
+  1. 문자열 C를 반복하여 문자열 A와 B를 생성할 수 있다.
+  2. 가능한 C 중에 가장 긴 문자열을 C로 한다.
+  3. 위 조건을 만족하는 C가 없으면 빈 문자열을 C로 한다.
+이 때, 문자열 A와 B를 입력받아 C를 출력하는 프로그램을 작성하시오.
+
+예시입력1
+
+```py
+A = 'ababcde'
+B = 'ababcde'
+출력: 'ababcde'
+```
+
+예시입력2
+
+```py
+A = 'ababababab'
+B = 'abab'
+출력: 'ab'
+```
+
+예시입력3
+
+```py
+A = 'abababab'
+B = 'abab'
+출력: 'abab'
+```
+
+예시입력4
+
+```py
+A = 'fast'
+B = 'campus'
+출력: ''
+```
+
+```py
+def gcdString(A, B):
+  pass
+```
+
+
+과제3.
+n개의 노드가 있는 그래프가 있다. 각 노드는 1부터 n까지 번호가 적혀있다. 1번 노드에서 가장 멀리 떨어진 노드의 갯수를 구하려고 한다.
+가장 멀리 떨어진 노드란 최단경로로 이동했을 때 간선의 개수가 가장 많은 노드들을 의미한다.
+노드의 개수 n, 간선에 대한 정보가 담긴 2차원 배열 vertex가 매개변수로 주어질 때, 1번 노드로부터 가장 멀리 떨어진 노드가 몇 개인지를 return 하도록
+solution 함수를 작성하라
+- 제한사항
+  - 노드의 개수 n은 2 이상 20,000 이하입니다.
+  - 간선은 양방향이며 총 1개 이상 50,000개 이하의 간선이 있습니다.
+  - vertex 배열 각 행 [a, b]는 a번 노드와 b번 노드 사이에 간선이 있다는 의미입니다.
+- 입출력 예
+  
+```py
+def solution(n, vertex):
+  return 0
+```
+
+과제4.
+마을에 1부터 N의 고유 번호를 가진 사람들이 있다. 소문으로는 마을 사람 중에 마을 판사가 있다고 한다. 마을 판사가 실제로 존재한다면,
+- 마을 판사는 아무도 믿지 않는다.
+- 다른 모든 사람들은 마을 판사를 믿는다.
+- 마을 판사가 있다면 오직 한명 뿐이다.
+리스트 trust가 주어졌을 때, trust[i] = [a, b]는 고유 번호가 a인 사람이 고유 번호가 b인 사람을 믿는다는 것을 의미한다고 한다.
+마을 판사가 존재한다면 마을 판사의 고유 번호를, 존재하지 않는다면 -1을 출력하는 프로그램을 작성하시오.
+(단, a가 b를 믿고 b가 c를 믿는다고 할 때, a가 c를 믿는다는 의미는 아니다.)

@@ -1399,6 +1399,55 @@ def searchMatrix(matrix, target):
   pass
 ```
 
+과제1 강사님 답안
+
+```py
+- 이진 탐색법을 2차원 배열에 대해서 구현하는 문제였습니다.
+- 첫번째 탐색을 범위에 대해서 수행하고, 두번째 탐색을 기존에 배운 내용으로 수행하면 해결할 수 있습니다 :)
+def searchMatrix(matrix, target):
+    def searchRow(sub_matrix):
+        m = len(sub_matrix)
+ 
+        if m == 1:
+            return sub_matrix[0]
+ 
+        mid = m // 2
+        left = sub_matrix[:mid]
+        right = sub_matrix[mid+1:]
+ 
+        if sub_matrix[mid][0] <= target <= sub_matrix[mid][-1]:
+            return sub_matrix[mid]
+        elif sub_matrix[mid][0] > target:
+            return searchRow(left)
+        else:
+            return searchRow(right)
+ 
+    def searchCol(array):
+        n = len(array)
+ 
+        if n == 0:
+            return False
+ 
+        if n == 1:
+            if array[0] == target:
+                return True
+            else:
+                return False
+ 
+        mid = n // 2
+        left = array[:mid]
+        right = array[mid+1:]
+ 
+        if array[mid] == target:
+            return True
+        elif array[mid] > target:
+            return searchCol(left)
+        else:
+            return searchCol(right)
+ 
+    array = searchRow(matrix)
+    return searchCol(array)
+```
 
 과제2.
 두 문자열 A와 B가 있을 때, 두 문자열의 '최대공약문자열' C를 아래와 같이 정의하자.
@@ -1444,6 +1493,59 @@ def gcdString(A, B):
   pass
 ```
 
+과제2 강사님 답안
+
+```py
+- 탐욕 알고리즘으로 적절한 답안을 찾아내는 문제였습니다.
+- 문제에서 제시하는 정의에 맞게 잘 구현해 주셨습니다 :)
+ 
+예시 답안)
+ 
+```python
+ 
+def gcdString(A, B):
+    def isDivisor(string, divisor):
+        n = len(divisor)
+        if len(string) % n != 0:
+            return False
+ 
+        while string != '':
+            if string[:n] != divisor:
+                return False
+            string = string[n:]
+        return True
+ 
+    if len(A) > len(B):
+        str1, str2 = A, B
+    else:
+        str1, str2 = B, A
+ 
+    divisor = str2
+    m = 1
+    while divisor != '':
+        if isDivisor(str2, divisor) and isDivisor(str1, divisor):
+            return divisor
+        m += 1
+        divisor = str2[:len(str2) // m]
+    return ''
+ 
+A = 'ababcde'
+B = 'ababcde'
+print(gcdString(A, B))
+ 
+A = 'ababababab'
+B = 'abab'
+print(gcdString(A, B))
+ 
+A = 'abababab'
+B = 'abab'
+print(gcdString(A, B))
+ 
+A = 'fast'
+B = 'campus'
+print(gcdString(A, B))
+```
+
 
 과제3.
 n개의 노드가 있는 그래프가 있다. 각 노드는 1부터 n까지 번호가 적혀있다. 1번 노드에서 가장 멀리 떨어진 노드의 갯수를 구하려고 한다.
@@ -1461,6 +1563,36 @@ def solution(n, vertex):
   return 0
 ```
 
+과제3 강사님 답안
+
+```py
+- 그래프 구조에서 최단 거리를 구하는 문제였습니다.
+- 다익스트라 알고리즘을 구현하면 되는 문제였습니다 :)
+import heapq
+ 
+def solution(n, vertex):
+    to_visit = []
+    dists = [float('inf')] * (n + 1)
+ 
+    dists[1] = 0
+    heapq.heappush(to_visit, (0, 1))
+    while len(to_visit) > 0:
+        dist, node = heapq.heappop(to_visit)
+        adj_list = list(map(lambda x: x[1], filter(lambda x: x[0] == node, vertex)))
+        adj_list += list(map(lambda x: x[0], filter(lambda x: x[1] == node, vertex)))
+        for adj_node in adj_list:
+            if dists[adj_node] > dist + 1:
+                dists[adj_node] = dist + 1
+                heapq.heappush(to_visit, (dists[adj_node], adj_node))
+ 
+    return dists.count(max(dists[1:]))
+ 
+n = 6
+vertex = [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]
+print(solution(n, vertex))
+```
+
+
 과제4.
 마을에 1부터 N의 고유 번호를 가진 사람들이 있다. 소문으로는 마을 사람 중에 마을 판사가 있다고 한다. 마을 판사가 실제로 존재한다면,
 - 마을 판사는 아무도 믿지 않는다.
@@ -1470,6 +1602,25 @@ def solution(n, vertex):
 마을 판사가 존재한다면 마을 판사의 고유 번호를, 존재하지 않는다면 -1을 출력하는 프로그램을 작성하시오.
 (단, a가 b를 믿고 b가 c를 믿는다고 할 때, a가 c를 믿는다는 의미는 아니다.)
 
+과제4 강사님 답안
+
+```py
+- 그래프 구조의 구성을 이해하는 문제였습니다.
+- 잘 구현해 주셨습니다! :) 아래 예시 답안도 확인해 주세요 :)
+def solution(N, trust):
+    for i in range(1, N + 1):
+        if len(list(filter(lambda x: x[0] == i, trust))) > 0:
+            continue
+        if len(list(filter(lambda x: x[1] == i, trust))) == N - 1:
+            return i
+    return -1
+ 
+print(solution(2, [[1,2]])) # 2
+print(solution(3, [[1,3],[2,3]])) #3
+print(solution(3, [[1,3],[2,3],[3,1]])) #-1
+print(solution(3, [[1,2],[2,3]])) #-1
+print(solution(4, [[1,3],[1,4],[2,3],[2,4],[4,3]])) #3
+```
 
 ### Report 6 (2021/04/22 ~ 2021/04/25)
 

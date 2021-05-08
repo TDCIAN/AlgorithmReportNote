@@ -2485,6 +2485,7 @@ print(solution("50*6-3*2"))
     - 그러므로 [1, 5]를 return 해주어야 합니다.
 
 ```python
+
 def solution(gems):
     return []
 

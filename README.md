@@ -108,9 +108,7 @@ print(res)
 ```
 ----
 
-강사님 답안
-
-### 과제1(25/25)
+### 과제1 답안(25/25)
 
 - for문과 if문을 이용하여 구현하는 문제였습니다.
 - 잘 구현해 주셨습니다! :)
@@ -146,7 +144,7 @@ print(a)
 ```
 ----
 
-### 과제2(25/25)
+### 과제2 답안(25/25)
 
 - map함수를 이해하고 활용해 보는 문제였습니다.
 - 잘 구현해 주셨습니다! :)
@@ -188,7 +186,7 @@ soccer 6
 
 ```
 
-### 과제3(25/25)
+### 과제3 답안(25/25)
 
 - 리스트를 해석하고 종합하는 문제였습니다.
 - 잘 구현해 주셨습니다! :)
@@ -216,7 +214,7 @@ for sport in set(a):
 
 ----
 
-### 과제4(25/25)
+### 과제4 답안(25/25)
 
 - 반복문과 조건문 등을 조합하여 원하는 숫자를 출력하는 문제였습니다.
 - 잘 구현해 주셨습니다! :) 아래 하나의 예시를 드리니 참고해 주세요 :)
@@ -333,141 +331,155 @@ answer: 참조, reference
 
 
 ### Report 2 (2021/03/25 ~ 2021/03/28)
-과제 1.
-다음과 같이 작성된 csv 파일을 읽고, 읽어들인 모든 값을 더해서 출력하는 파이썬 프로그램을 작성하시오.
-csv 파일의 위치는 실행 위치와 동일하다고 가정한다(a.csv).
-(단, csv 파일의 내용은 달라질 수 있으며, 자료의 개수는 10000개 이하이다.)
 
-```p
+## 과제1.
+
+----
+
+다음과 같이 작성된 csv 파일을 읽고, 읽어들인 모든 값을 더해서 출력하는 파이썬 프로그램을 작성하시오. csv파일의 위치는 실행 위치와 동일하다고 가정한다(`a.csv`). (단, csv 파일의 내용은 달라질 수 있으며, 자료의 개수는 10000개 이하이다.)
+
+```
 --------------- a.csv --------------------
 10,60,20,33,55,25,64,83,523,54,87,84,56,84
 ------------------------------------------
 ```
+
 ```
 ---------- 출력 ------------
 1238
 ----------------------------
 ```
 
-답안
+----
 
-```p
+### 과제1 답안(25/25)
+
+- 파일 입력을 이용해 csv파일 파싱을 잘 구현해 주셨습니다 :)
+- 정수형 입력을 종합하여 총합을 잘 계산하여 출력해 주셨습니다.
+
+예시 답안)
+
+```python
 import csv
-with open('./a.csv', 'r') as f:
+
+sum = 0
+with open('a.csv', 'r') as f:
     reader = csv.reader(f)
-    sum = 0    
-    for n in reader:
-        for i in n:
-            sum += int(i)
-
+    for line in reader:
+        for elem in line:
+            sum += int(elem)
 print(sum)
-
 ```
 
-과제2.
-아래 기반 코드를 완성하여, 입력받은 값 중 중앙값을 출력하는 클래스를 완성하시오.
-입력받은 값이 짝수개이면, 중앙값 2개의 평균을 출력하시오
-(단, clear 메소드는 입력받은 내역을 모두 삭제)
 
-```py
+## 과제2.
+
+----
+
+아래 기반 코드를 완성하여, 입력받은 값 중 중앙값을 출력하는 클래스를 완성하시오. 입력받은 값이 짝수개이면, 중앙값 2개의 평균을 출력하시오. (단, clear 메소드는 입력받은 내역을 모두 삭제)
+
+```python
 class Median:
     def __init__(self):
         pass
- 
+
     def get_item(self, item):
         pass
- 
+
     def clear(self):
         pass
- 
+
     def show_result(self):
         pass
- 
+
 median= Median()
 for x in range(10):
     median.get_item(x)
 median.show_result()
- 
+
 median.clear()
 for x in [0.5, 6.2, -0.4, 9.6, 0.4]:
     median.get_item(x)
 median.show_result()
 ```
-
 
 ```
 --------- 출력 -------------------
 4.5
 0.5
 ------------------------------------
+
 ```
 
-답안
+----
 
-```py
+### 과제2 답안(25/25)
+
+- 객체지향적으로 중간값을 구하는 문제였습니다.
+- 클래스의 기능을 충실하게 잘 구현해 주셨습니다!
+
+```python
 class Median:
-    list_of_num = []
-
     def __init__(self):
-        self.list_of_num = []
- 
+        self.list = list()
+
     def get_item(self, item):
-        self.list_of_num.append(item)
- 
+        self.list.append(item)
+
     def clear(self):
-        self.list_of_num = []
- 
+        self.list = list()
+
     def show_result(self):
-        self.list_of_num.sort()
-        len_of_list = len(self.list_of_num)
-        center_of_list = int(len_of_list / 2)
-        if len_of_list % 2 == 1:
-            print(self.list_of_num[center_of_list])
+        self.list.sort()
+        n = len(self.list)
+        if n % 2 == 1:
+            med = self.list[n // 2]
         else:
-            print((self.list_of_num[center_of_list - 1] + self.list_of_num[center_of_list]) / 2.0)
- 
-median = Median()
+            med = (self.list[n // 2 - 1] + self.list[n // 2]) / 2
+        print(med)
+
+median= Median()
 for x in range(10):
     median.get_item(x)
 median.show_result()
- 
+
 median.clear()
 for x in [0.5, 6.2, -0.4, 9.6, 0.4]:
     median.get_item(x)
 median.show_result()
 ```
 
-과제3.
-아래 기반 코드를 완성하여, 주어진 출력을 하는 클래스를 구현하시오.
-단, Animal 클래스는 수정하지 않고 구현하시오.
-최소한의 메소드만을 추가하여 구현하시오.
-하나의 메소드는 하나의 line만을 출력하시오.
 
+## 과제3.
 
-```py
+----
+
+아래 기반 코드를 완성하여, 주어진 출력을 하는 클래스를 구현하시오. 단, Animal 클래스는 수정하지 않고 구현하시오. 최소한의 메소드만을 추가하여 구현하시오. 하나의 메소드는 하나의 line만을 출력하시오.
+
+```python
 class Animal:
     def __init__(self, name):
         self.name = name
- 
+
     def speak(self):
         print(self.name + ' cannot speak.')
- 
+
     def move(self):
         print(self.name + ' cannot move.')
- 
- 
+
+
 class Dog(Animal):
     pass
- 
- 
+
+
 class Retriever(Dog):
     pass
- 
- 
+
+
 dog = Dog('Nancy')
 dog.speak()
 dog.move()
- 
+
 super_dog = Retriever('Michael')
 super_dog.speak()
 super_dog.move()
@@ -482,47 +494,54 @@ Michael moves like a jagger.
 ---------------------------------
 ```
 
+----
 
+### 과제3 답안(25/25)
 
-```py
+- 클래스의 상속을 이해하고, 이를 직접 구현하는 문제였습니다.
+- 상속과 오버라이딩을 잘 이해하고 구현해 주셨습니다 :)
+
+```python
 class Animal:
     def __init__(self, name):
         self.name = name
- 
+
     def speak(self):
         print(self.name + ' cannot speak.')
- 
+
     def move(self):
         print(self.name + ' cannot move.')
- 
- 
+
+
 class Dog(Animal):
     def move(self):
-      print(self.name + ' moves like a jagger.')
- 
+        print(self.name + ' moves like a jagger.')
+
+
 class Retriever(Dog):
     def speak(self):
-      print(self.name + ' is smart enough to speak.')
- 
- 
+        print(self.name + ' is smart enough to speak.')
+
+
 dog = Dog('Nancy')
 dog.speak()
 dog.move()
- 
+
 super_dog = Retriever('Michael')
 super_dog.speak()
 super_dog.move()
-
 ```
 
-과제4.
-아래 기반 코드를 완성하여, 주어진 출력을 하는 클래스를 구현하시오. 단, 하나의 메소드에서는 단 하나의 line만을 출력하시오.
-PEP를 준수하여 코드를 작성하시오.
+## 과제4.
 
-```py
+----
+
+아래 기반 코드를 완성하여, 주어진 출력을 하는 클래스를 구현하시오. 단, 하나의 메소드에서는 단 하나의 line만을 출력하시오. PEP를 준수하여 코드를 작성하시오.
+
+```python
 class Foo:
     pass
- 
+
 print(Foo.bar)       # A 출력
 print(Foo().bar)     # B 출력
 print(Foo.Bar.bar)   # C 출력
@@ -538,24 +557,28 @@ D
 ----------------
 ```
 
-답안
+----
 
+### 과제4 답안(25/25)
 
-```py
+- 클래스 변수와 인스턴스 변수를 이해하고 구현하는 문제였습니다.
+- 중첩 클래스까지 활용하면 주어진 과제를 모두 해결하실 수 있습니다. :)
+
+```python
 class Foo:
-  bar = 'A'
-  def __init__(self):
-    self.bar = 'B'
-  
-  class Bar:
-    bar = 'C'
+    bar = 'A'
     def __init__(self):
-      self.bar = 'D'
-  
-print(Foo.bar)
-print(Foo().bar)
-print(Foo.Bar.bar)
-print(Foo.Bar().bar)
+        self.bar = 'B'
+    
+    class Bar:
+        bar = 'C'
+        def __init__(self):
+            self.bar = 'D'
+
+print(Foo.bar)       # A 출력
+print(Foo().bar)     # B 출력
+print(Foo.Bar.bar)   # C 출력
+print(Foo.Bar().bar) # D 출력
 ```
 
 ### Quiz 3 (2021/04/01 ~ 2021/04/04)
@@ -645,90 +668,99 @@ Q10. 해시 테이블 자료구조에서 다른 키 값이지만 동일한 해�
 
 ### Report 3 (2021/04/01 ~ 2021/04/03)
 
-과제 1.
-아래 주어진 기반 코드를 완성하여 Linked Queue를 구현하시오. Linked Queue에 대한 설명을 참조하시오
+## 과제1.
 
+----
+아래 주어진 기반 코드를 완성하여 Linked Queue를 구현하시오. Linked Queue에 대한 설명을 참조하시오.
 
 - Linked Queue의 특징
   - Linked Queue는 Doubly Linked List를 기반으로 만들어진 Queue이다.
   - Linked Queue의 모든 동작은 O(1)의 시간복잡도로 동작한다.
   - Linked Queue에 정의된 동작은 아래와 같다.
-    1. is_empty(): Queue가 비어있으면 True, 비어있지 않으면 False를 출력한다.
-    2. put(): Queue의 rear에 새로운 데이터를 입력한다.
-    3. get(): Qeueue의 front에서 데이터를 출력한다. 출력한 데이터는 Queue에서 삭제한다. 더이상 출력할 데이터가 없는 경우 None을 출력한다.
-    4. peek(): Queue의 front에서 데이터를 출력한다. 출력한 데이터는 Queue에 그대로 유지한다. 더이상 출력할 데이터가 없는 경우 None을 출력한다.
+    1. `is_empty()`: Queue가 비어있으면 True, 비어있지 않으면 False를 출력한다.
+    1. `put()`: Queue의 rear에 새로운 데이터를 입력한다.
+    1. `get()`: Queue의 front에서 데이터를 출력한다. 출력한 데이터는 Queue에서 삭제한다. 더이상 출력할 데이터가 없는 경우 None을 출력한다.
+    1. `peek()`: Queue의 front에서 데이터를 출력한다. 출력한 데이터는 Queue에 그대로 유지한다.  더이상 출력할 데이터가 없는 경우 None을 출력한다.
 
-```py
+
+```python
 class Node:
-  def __init__(self, data, prev=None, next=None):
-    self.data =data
-    self.prev = prev
-    self.next = next
+    def __init__(self, data, prev=None, next=None):
+        self.data = data
+        self.prev = prev
+        self.next = next
     
 class LinkedQueue:
-  def __init__(self):
-    self.front = None
-    self.rear = None
+    def __init__(self):
+        self.front = None
+        self.rear = None
     
-  def is_empty(self):
-    pass
+    def is_empty(self):
+        pass
     
-  def put(self, data):
-    pass
+    def put(self, data):
+        pass
     
-  def get(self):
-    pass
+    def get(self):
+        pass
     
-  def peek(self):
-    pass
+    def peek(self):
+        pass
     
 # Test code
 queue = LinkedQueue()
 
 print(queue.is_empty())
 for i in range(10):
-  queue.put(i)
+    queue.put(i)
 print(queue.is_empty())
 
 for _ in range(11):
-  print(queue.get(), end = ' ')
+    print(queue.get(), end=' ')
 print()
 
 for i in range(20):
-  queue.put(i)
+    queue.put(i)
 print(queue.is_empty())
 
 for _ in range(5):
-  print(queue.peek(), end = ' ')
-  
+    print(queue.peek(), end=' ')
+print()
+
 for _ in range(21):
-  print(queue.get(), end = ' ')
+    print(queue.get(), end=' ')
 print()
 print(queue.is_empty())
 
 ```
+----
 
 
-### 강사님 예시답안
+### 과제1 답안(25/25)
 
-```py
+- 수업시간에 배운 Doubly Linked List를 이용하여 Linked Queue를 구현하는 문제였습니다.
+- 기능을 잘 구현해 주셨습니다! 아래 예시답안을 첨부하니 참고해 주세요 :)
+
+예시 답안)
+
+```python
 class Node:
     def __init__(self, data, prev=None, next=None):
         self.data = data
         self.prev = prev
         self.next = next
- 
+
 class LinkedQueue:
     def __init__(self):
         self.front = None
         self.rear = None
- 
+
     def is_empty(self):
         if self.front is None:
             return True
         else:
             return False
- 
+
     def put(self, data):
         if self.rear is None:
             self.front = Node(data)
@@ -736,7 +768,7 @@ class LinkedQueue:
         else:
             self.rear = Node(data, self.rear, None)
             self.rear.prev.next = self.rear
- 
+
     def get(self):
         if self.front is None:
             return None
@@ -748,71 +780,79 @@ class LinkedQueue:
             self.front = self.front.next
             self.front.prev = None
         return data
- 
+
     def peek(self):
         if self.front is None:
             return None
         else:
             return self.front.data
+
 ```
 
-과제 2.
-아래는 Python의 list를 이용하여 Stack을 구현한 것이다. Stack의 특성을 이용하면 후위 표기법으로 작성된 수식을 계산할 수 있다.
-후위 표기법은 연산자를 나중에 표기하는 표기법으로, 아래와 같이 계산한다. 후위 표기법에서 사칙연산의 우선순위는 없다고 가정한다.
 
-```py
+
+## 과제2.
+
+----
+아래는 Python의 list를 이용하여 Stack을 구현한 것이다. Stack의 특성을 이용하면 후위 표기법으로 작성된 수식을 계산할 수 있다. 후위 표기법은 연산자를 나중에 표기하는 표기법으로, 아래와 같이 계산한다. 후위 표기법에서 사칙연산의 우선순위는 없다고 가정한다.
+
+```
 10 5 + 2 * 3 /
 = 15 2 * 3 /
 = 30 3 /
 = 10
 ```
 
-연산자와 피연산자가 공백으로 구분된다고 할 때, 내부적으로 stack을 유일한 자료구조로 사용하여 
-후위 표기법으로 표기된 수식을 계산하는 메소드 calculate()을 완성하시오.
+연산자와 피연산자가 공백으로 구분된다고 할 때, 내부적으로 stack을 유일한 자료구조로 사용하여 후위 표기법으로 표기된 수식을 계산하는 메소드 `calculate()`을 완성하시오.
 
-```py
+```python
 class Stack:
-  def __init__(self):
-    self.list = list()
+    def __init__(self):
+        self.list = list()
     
-  def push(self, data):
-    self.list.append(data)
-    
-  def pop(self):
-    return self.list.pop()
-    
+    def push(self, data):
+        self.list.append(data)
+        
+    def pop(self):
+        return self.list.pop()
+
 class Calculator:
-  def __init__(self):
-    self.stack = Stack()
+    def __init__(self):
+        self.stack = Stack()
     
-  def calculate(self, string):
-    pass
-    
+    def calculate(self, string):
+        pass
+
 # Test code
 calc = Calculator()
 print(calc.calculate('4 6 * 2 / 2 +'))
 print(calc.calculate('2 5 + 3 * 6 - 5 *'))
-
 ```
+----
 
 
-### 강사님 예시답안
+### 과제2 답안(25/25)
 
-```py
+- Stack 자료구조를 응용하여 계산기를 구현하는 문제였습니다.
+- Stack의 기능을 활용하여 잘 구현해 주셨습니다. 아래 예시답안도 확인해 주세요 :)
+
+예시 답안)
+
+```python
 class Stack:
     def __init__(self):
         self.list = list()
- 
+    
     def push(self, data):
         self.list.append(data)
- 
+        
     def pop(self):
         return self.list.pop()
- 
+
 class Calculator:
     def __init__(self):
         self.stack = Stack()
- 
+    
     def calculate(self, string):
         for x in string.split(' '):
             if x == '+':
@@ -826,48 +866,59 @@ class Calculator:
             else:
                 self.stack.push(int(x))
         return self.stack.pop()
- 
+    
 calc = Calculator()
 print(calc.calculate('4 6 * 2 / 2 +'))
 print(calc.calculate('2 5 + 3 * 6 - 5 *'))
+
 ```
 
-과제 3.
-다음은 Tree 자료구조를 순회하는 방법 중, Pre-order 순회 방법을 설명한 것이다. 자료구조의 순회란, 자료구조에 속한 모든 data를 한 번씩 접근하는 것이다.
-Pre-order 순회를 하면서 순회한 순서대로 Node의 data를 출력하는 preorder() 메소드를 완성하시오.
-- Tree 자료구조를 선회할 때에는 반드시 root node부터 순회를 시작한다.
+
+
+## 과제3.
+
+----
+다음은 Tree 자료구조를 순회하는 방법 중, Pre-order 순회 방법을 설명한 것이다. 자료구조의 순회란, 자료구조에 속한 모든 data를 한 번씩 접근하는 것이다. Pre-order 순회를 하면서 순회한 순서대로 Node의 data를 출력하는 `preorder()` 메소드를 완성하시오.
+
+- Tree 자료구조를 순회할 때에는 반드시 root node부터 순회를 시작한다.
 - Pre-order 순회를 할 때에는 아래와 같은 방법을 재귀적으로 수행한다.
   - 새로운 node에 접근할 경우, 아래 순서대로 동작한다.
     1. Node에 있는 data를 출력한다.
-    2. Node에 left child가 있으면, left child node에 접근한다.
-    3. Node에 right child가 있으면, right child node에 접근한다.
+    1. Node에 left child가 있으면, left child node에 접근한다.
+    1. Node에 right child가 있으면, right child node에 접근한다.
   - root node에서 순회를 시작할 경우, 재귀적 동작으로 인해 모든 node의 data를 출력할 수 있다.
 
-
-```py
+```python
 class Node:
-  def __init__(self, data, left=None, right=None):
-    self.data = data
-    self.left = left
-    self.right = right
-    
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+  
 class Tree:
-  def __init__(self, root):
-    self.root = root
-    
-  def preorder(self):
-    pass
-    
+    def __init__(self, root):
+        self.root = root
+   
+    def preorder(self):
+        pass
+
 # Test code
 root = Node(5, Node(2, Node(7, Node(4), Node(1)), Node(3)), Node(9, Node(6), Node(10)))
 tree = Tree(root)
 tree.preorder()
 ```
 
+----
 
-### 강사님 예시답안
+### 과제3 답안(0/25)
 
-```py
+- Tree의 Preorder traversal(depth-firsth traversal)을 구현하는 문제였습니다.
+- 재귀함수를 이용하여 구현하면 쉽게 구현할 수 있습니다.
+- 아래 예시 답안을 확인해 주세요 :)
+
+예시 답안)
+
+```python
 class Node:
     def __init__(self, data, left=None, right=None):
         self.data = data
@@ -886,7 +937,7 @@ class Tree:
             if node.right:
                 recursion(node.right)
         recursion(self.root)
- 
+          
  
 # Test code
 root = Node(5, Node(2, Node(7, Node(4), Node(1)), Node(3)), Node(9, Node(6), Node(10)))
@@ -894,36 +945,36 @@ tree = Tree(root)
 tree.preorder()
 ```
 
-과제 4.
-HashTable 클래스는 문자열을 key로 입력받는 해쉬 테이블 자료구조를 구현한 것이다.
-HashTable 클래스는 단순한 해쉬 함수로 인해, 해쉬 충돌이 빈번히 발생한다.
-이 단점을 개선하기 위해, Chaining 기법으로 ChainedHashTable을 구현하고자 한다.
+## 과제4.
+
+----
+HashTable 클래스는 문자열을 key로 입력받는 해쉬 테이블 자료구조를 구현한 것이다. HashTable 클래스는 단순한 해쉬 함수로 인해, 해쉬 충돌이 빈번히 발생한다. 이 단점을 개선하기 위해, Chaining 기법으로 ChainedHashTable을 구현하고자 한다.
 
 HashTable을 상속하여 해쉬 충돌이 발생해도 정상적으로 동작하는 ChainedHashTable을 완성하시오.
 
-```py
+```python
 def hash_func(key):
-  return ord(key[0]) % 10
-  
+    return ord(key[0]) % 10
+
 class HashTable:
-  def __init__(self):
-    self.table = [None] * 10
+    def __init__(self):
+        self.table = [None]*10
     
-  def self(self, key, value):
-    self.table[hash_func(key)] = value
+    def set(self, key, value):
+        self.table[hash_func(key)] = value
     
-  def get(self, key):
-    return self.table[hash_func(key)]
-    
+    def get(self, key):
+        return self.table[hash_func(key)]
+
 class Node:
-  def __init__(self, key, data):
-    self.key = key
-    self.data = data 
-    self.next = None
+    def __init__(self, key, data):
+        self.key = key
+        self.data = data
+        self.next = None
     
 class ChainedHashTable(HashTable):
-  pass
-  
+    pass
+
 # Test code
 
 ht = ChainedHashTable()
@@ -946,33 +997,41 @@ print(ht.get('hello3'), end=' ')
 print(ht.get('hello4'), end=' ')
 ```
 
+----
 
-### 강사님 예시답안
 
-```py
+
+### 과제4 답안(0/25)
+
+- Hash Table에서 Chaining 기법을 구현하는 문제였습니다.
+- 수업시간에 배운 list를 이용하는 방법을 사용해도 되며, 아래 Node를 이용하는 예시 답안도 확인해 주세요 :)
+
+예시 답안)
+
+```python
 def hash_func(key):
     return ord(key[0]) % 10
- 
+
 class HashTable:
     def __init__(self):
         self.table = [None]*10
- 
+    
     def set(self, key, value):
         self.table[hash_func(key)] = value
- 
+    
     def get(self, key):
         return self.table[hash_func(key)]
- 
+
 class Node:
     def __init__(self, key, data):
         self.key = key
         self.data = data
         self.next = None
- 
+    
 class ChainedHashTable(HashTable):
     def __init__(self):
         super().__init__()
- 
+    
     def set(self, key, value):
         idx = self.hash_func(key)
         if self.table[idx] is None:
@@ -985,7 +1044,7 @@ class ChainedHashTable(HashTable):
                     return
                 node = node.next
             node.next = Node(key, value)
- 
+            
     def get(self, key):
         idx = self.hash_func(key)
         if self.table[idx] is None:
@@ -1019,8 +1078,9 @@ print(ht.get('hello'), end=' ')
 print(ht.get('hello2'), end=' ')
 print(ht.get('hello3'), end=' ')
 print(ht.get('hello4'), end=' ')
-
 ```
+
+
 
 ### Quiz 4 (2021/04/08 ~ 2021/04/11)
 

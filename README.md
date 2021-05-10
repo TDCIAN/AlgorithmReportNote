@@ -1168,37 +1168,44 @@ Q10. 다음 중 시간복잡도가 다른 알고리즘을 고르시오.
 ### Report 4 (2021/04/08 ~ 2021/04/11)
 
 
-과제1.
-<br> Min Heap 자료구조를 이용하면 최대값을 O(logN)의 시간복잡도로 찾을 수 있다. Min Heap을 이용하면 우선순이 값이 낮은 자료를 먼저 출력하는 Priority Queue를 구현할 수 있다.
-<br> Min Heap을 이용한 Priority Queue는 아래와 같은 특징을 가진다.
+
+## 과제1.
+
+----
+Min Heap 자료구조를 이용하면 최대값을 `O(logN)`의 시간복잡도로 찾을 수 있다. Min Heap을 이용하면 우선순위 값이 낮은 자료를 먼저 출력하는 Priority Queue를 구현할 수 있다. Min Heap을 이용한 Priority Queue는 아래와 같은 특징을 가진다.
+
 - Min Heap을 이용한 Priority Queue의 특징
-  - 자료를 입력하는 동작과 출력하는 동작 모두 O(logN)으로 일어진다.
+  - 자료를 입력하는 동작과 출력하는 동작 모두 `O(logN)`으로 이루어진다.
   - 우선순위 값이 낮은 자료를 먼저 출력하되, 우선순위 값이 같은 자료끼리는 순서를 고려하지 않는다.
   - 다음과 같은 Method들을 구현한다.
-    1. is_empty(): Queue가 비어있으면 True, 비어있지 않으면 False를 출력한다.
-    2. put(): Priority Queue에 자료를 입력한다. 자료는 길이가 2인 Tuple로, (우선순위, 자료) 형태로 입력받는다.
-    3. get(): Priority Queue에서 자료를 출력한다. 출력한 데이터는 Priority Queue에서 삭제한다. 더이상 출력할 데이터가 없는 경우 None을 출력한다.
-    4. peek(): Priority Queue에서 자료를 출력한다. 출력한 데이터는 Priority Queue에 그대로 유지한다. 더이상 출력할 데이터가 없는 경우 None을 출력한다.
+    1. `is_empty()`: Queue가 비어있으면 True, 비어있지 않으면 False를 출력한다.
+    1. `put()`: Priority Queue에 자료를 입력한다. 자료는 길이가 2인 Tuple로, `(우선순위, 자료)` 형태로 입력받는다.
+    1. `get()`: Priority Queue에서 자료를 출력한다. 출력한 데이터는 Priority Queue에서 삭제한다. 더이상 출력할 데이터가 없는 경우 None을 출력한다.
+    1. `peek()`: Priority Queue에서 자료를 출력한다. 출력한 데이터는 Priority Queue에 그대로 유지한다. 더이상 출력할 데이터가 없는 경우 None을 출력한다.
 
 
-```py
+
+```python
 class PriorityQueue:
-  def __init__(self):
-    pass
+    def __init__(self):
+        pass
     
-  def is_empty(self):
-    pass
+    def is_empty(self):
+        pass
     
-  def put(self, data):
-    pass
+    def put(self, data):
+        pass
     
-  def get(self):
-    pass
+    def get(self):
+        pass
     
-  def peek(self):
-    pass
-    
+    def peek(self):
+        pass
+```
+
+```python
 # Test code
+
 pq = PriorityQueue()
 pq.put((0, 'a'))
 pq.put((5, 'b'))
@@ -1214,19 +1221,26 @@ print(pq.get())
 print(pq.get())
 print(pq.get())
 print(pq.get())
-
 ```
+----
 
-답안
-```py
 
+### 과제1 답안(0/25)
+
+- 수업시간에 배운 Heap 구조를 이용하여 PriorityQueue를 구현하는 문제였습니다.
+- Heap 구조를 직접 구현해 주셔야 하며, 다른 방법을 사용할 경우 시간복잡도 조건이 맞지 않게 됩니다.
+- Heap을 구현하시되, 입력을 우선순위와 데이터 2가지를 함께 입력받는 형식으로 구현하시면 됩니다.
+
+예시 답안)
+
+```python
 class PriorityQueue:
     def __init__(self):
         self.tree = [None]
- 
+
     def is_empty(self):
         return len(self.tree) == 1
- 
+
     def put(self, data):
         self.tree.append(data)
         curr = len(self.tree) - 1
@@ -1237,7 +1251,7 @@ class PriorityQueue:
             self.tree[curr], self.tree[parent] = self.tree[parent], self.tree[curr]
             curr = parent
             parent = curr // 2
- 
+
     def get(self):
         if self.is_empty() is True:
             return None
@@ -1257,7 +1271,7 @@ class PriorityQueue:
                     if self.tree[right][0] < self.tree[curr][0]:
                         self.tree[curr], self.tree[right] = self.tree[right], self.tree[curr]
                         curr = right
- 
+
             elif left < len(self.tree) and self.tree[left][0] < self.tree[curr][0]:
                 self.tree[curr], self.tree[left] = self.tree[left], self.tree[curr]
                 curr = left
@@ -1267,12 +1281,12 @@ class PriorityQueue:
             else:
                 break
         return data
- 
+
     def peek(self):
         if self.is_empty() is True:
             return None
         return self.tree[1]
- 
+
 pq = PriorityQueue()
 pq.put((0, 'a'))
 pq.put((5, 'b'))
@@ -1280,37 +1294,44 @@ pq.put((2, 'c'))
 pq.put((1, 'd'))
 pq.put((3, 'e'))
 pq.put((4, 'f'))
- 
-print(pq.get())
-print(pq.get())
-print(pq.get())
-print(pq.get())
-print(pq.get())
-print(pq.get())
-print(pq.get())
 
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
+print(pq.get())
 ```
 
 
-과제2.
-<br> 오름차순으로 정렬된 N개의 정수를 가진 List가 주어져있을 때, 해당 List에 존재하는 서로 다른 값이 몇 가지인지 알아내는 알고리즘을 구현하라.
-<br> 알고리즘의 제약사항은 아래와 같다. (알고리즘은 1 <= N <= 10000에서 테스트된다)
-    - 추가 메모리 사용은 O(1)으로 제한된다. 따라서 set()와 dict() 등의 자료구조를 사용할 수 없다.
-    - 알고리즘의 시간복잡도는 O(N) 이하로 제한된다.
+## 과제2.
 
-```py
+----
+오름차순으로 정렬된 N개의 정수를 가진 List가 주어져있을 때, 해당 List에 존재하는 서로 다른 값이 몇 가지인지 알아내는 알고리즘을 구현하라. 알고리즘의 제약사항은 아래와 같다. (알고리즘은 `1 <= N <= 10000`에서 테스트된다.)
+
+- 추가 메모리 사용은 `O(1)`으로 제한된다. 따라서 set()와 dict() 등의 자료구조를 사용할 수 없다.
+- 알고리즘의 시간복잡도는 `O(N)` 이하로 제한된다.
+
+```python
 def countUniques(a):
-  pass
+    pass
 
 # Test code
 print(countUniques([-1, 1, 1, 1, 1, 4, 4, 4, 4, 10, 14, 14])) # 5
 print(countUniques([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])) # 2
-
 ```
+----
 
 
-답안
-```py
+### 과제2 답안(25/25)
+
+- 정렬된 리스트의 특성을 이용하여 주어진 스펙에 맞는 알고리즘을 구현하는 문제였습니다.
+- O(n)의 시간 복잡도와 O(1)의 공간 복잡도를 만족시키도록 잘 구현해 주셨습니다! :)
+
+예시 답안)
+
+```python
 def countUniques(a):
     last_el = None
     count = 0
@@ -1319,30 +1340,37 @@ def countUniques(a):
             count += 1
         last_el = el
     return count
- 
+
 print(countUniques([-1, 1, 1, 1, 1, 4, 4, 4, 4, 10, 14, 14])) # 5
 print(countUniques([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1])) # 2
 ```
 
 
-과제3
-<br> N개의 문자열로 이루어진 List에서 전체 문자열이 앞 n개 문자열이 같다고 할 때, 가장 큰 n을 출력하는 알고리즘을 구현하라.
-<br> (즉, 주어진 모든 문자열의 앞의 몇개의 문자가 일치하는지 출력하라)
+## 과제3.
 
-```py
+----
+N개의 문자열로 이루어진 List에서 전체 문자열이 앞 n개 문자열이 같다고 할때, 가장 큰 n을 출력하는 알고리즘을 구현하라. (즉, 주어진 모든 문자열의 앞의 몇개의 문자가 일치하는지 출력하라)
+
+```python
 def solution(a):
-  return 0
+    return 0
 
 # Test code
 print(solution(['abcd', 'abce', 'abchg', 'abcfwqw', 'abcdfg'])) # 3
 print(solution(['abcd', 'gbce', 'abchg', 'abcfwqw', 'abcdfg'])) # 0
-
 ```
 
+----
 
 
-답안
-```py
+### 과제3 답안(0/25)
+
+- 문자열 매칭을 다루는 문제였습니다!
+- for문과 if문을 적절히 사용하여 주어진 내용을 충실히 구현하면 됩니다 :)
+
+예시 답안)
+
+```python
 def solution(a):
     count = 0
     w = a[0]
@@ -1357,48 +1385,56 @@ def solution(a):
         else:
             break
     return count
- 
+
 print(solution(['abcd', 'abce', 'abchg', 'abcfwqw', 'abcdfg'])) # 3
 print(solution(['abcd', 'gbce', 'abchg', 'abcfwqw', 'abcdfg'])) # 0
 ```
 
 
 
-과제4.
-<br> 자연수 중, 각 자리수를 제곱한 것을 더하는 과정을 반복했을 때 1로 끝나는 수를 '행복한 수'라고 한다.
-<br> '행복한 수'가 아닌 경우 이 과정이 1에 도달하지 못하고 같은 수열이 반복되는 무한 루프에 빠지게 된다.
-<br> 자연수를 입력받았을 때 '행복한 수'인지 판별하는 알고리즘을 작성하라.
+
+## 과제4.
+
+----
+자연수 중, **각 자리수를 제곱한 것을 더하는 과정을 반복했을 때 1으로 끝나는 수**를 '행복한 수'라고 한다. '행복한 수'가 아닌 경우 이 과정이 1에 도달하지 못하고 같은 **수열이 반복되는 무한 루프**에 빠지게 된다. 자연수를 입력받았을 때 '행복한 수'인지 판별하는 알고리즘을 작성하라.
 
 '행복한 수'를 찾는 과정의 예
+  ```
+  19이 행복한 수인지 확인하는 과정
+  1^2 + 9^2 = 82
+  8^2 + 2^2 = 68
+  6^2 + 8^2 = 100
+  1^2 + 0^2 + 0^2 = 1 --> True
+  ```
 
-19이 행복한 수인지 확인하는 과정
-1^2 + 9^2 = 82
-8^2 + 2^2 = 68
-6^2 + 8^2 = 100
-1^2 + 0^2 + 0^2 = 1 --> True
-
-
-```py
+```python
 def solution(n):
-  return True
+    return True
 
 # Test code
 print(solution(19)) # True
 print(solution(61)) # False
-
 ```
 
+----
 
 
-답안
-```py
+### 과제4 답안(0/25)
+
+- 새로운 개념을 이해하고, 직접 구현해 보는 문제였습니다.
+- 재귀적으로 함수를 구현하면 간결하게 구현할 수 있습니다 :)
+
+예시 답안)
+
+```python
+
 def solution(n):
     def calc_value(m):
         val = 0
         for c in str(m):
             val += int(c) ** 2
         return val
- 
+
     hist = set()
     while n != 1:
         hist.add(n)
@@ -1406,7 +1442,7 @@ def solution(n):
         if n in hist:
             return False
     return True
- 
+
 print(solution(19)) # True
 print(solution(61)) # False
 ```
@@ -1519,14 +1555,16 @@ Q10. 최소 신장 트리를 구하는 알고리즘 중 하나로, 전체 그래
 
 ### Report 5 (2021/04/15 ~ 2021/04/18)
 
-과제1.
-이진 탐색법은 정렬된 자료를 탐색하는 데에 사용할 수 있다. 인덱스가 낮을 수록 더 작은 값으로 정렬된 2차원 리스트에서 target을 찾으면 True를 반환하고,
-target에서 찾을 수 없으면 False를 반환하는 프로그램을 작성하시오
 
-예시입력1
-```py
+## 과제1.
+
+----
+이진 탐색법은 정렬된 자료를 탐색하는 데에 사용할 수 있다. 인덱스가 낮을 수록 더 작은 값으로 정렬된 2차원 리스트에서 `target`을 찾으면 True를 반환하고, `target`을 찾을 수 없으면 False를 반환하는 프로그램을 작성하시오.
+
+예시 입력1
+```python
 matrix = [
-  [1, 3, 5, 7],
+  [1,   3,  5,  7],
   [10, 11, 16, 20],
   [23, 30, 34, 50]
 ]
@@ -1534,11 +1572,10 @@ target = 3
 출력: True
 ```
 
-
-예시입력2
-```py
+예시 입력2
+```python
 matrix = [
-  [1, 3, 5, 7],
+  [1,   3,  5,  7],
   [10, 11, 16, 20],
   [23, 30, 34, 50]
 ]
@@ -1546,132 +1583,137 @@ target = 13
 출력: False
 ```
 
-```py
+```python
 def searchMatrix(matrix, target):
-  pass
+    pass
 ```
+----
 
-과제1 강사님 답안
+### 과제1 답안(0/25)
 
-```py
 - 이진 탐색법을 2차원 배열에 대해서 구현하는 문제였습니다.
 - 첫번째 탐색을 범위에 대해서 수행하고, 두번째 탐색을 기존에 배운 내용으로 수행하면 해결할 수 있습니다 :)
+
+예시 답안)
+
+```python
 def searchMatrix(matrix, target):
     def searchRow(sub_matrix):
         m = len(sub_matrix)
- 
+
         if m == 1:
             return sub_matrix[0]
- 
+
         mid = m // 2
         left = sub_matrix[:mid]
         right = sub_matrix[mid+1:]
- 
+
         if sub_matrix[mid][0] <= target <= sub_matrix[mid][-1]:
             return sub_matrix[mid]
         elif sub_matrix[mid][0] > target:
             return searchRow(left)
         else:
             return searchRow(right)
- 
+
     def searchCol(array):
         n = len(array)
- 
+
         if n == 0:
             return False
- 
+
         if n == 1:
             if array[0] == target:
                 return True
             else:
                 return False
- 
+
         mid = n // 2
         left = array[:mid]
         right = array[mid+1:]
- 
+
         if array[mid] == target:
             return True
         elif array[mid] > target:
             return searchCol(left)
         else:
             return searchCol(right)
- 
+
     array = searchRow(matrix)
     return searchCol(array)
-```
 
-과제2.
+
+## 과제2.
+
+----
 두 문자열 A와 B가 있을 때, 두 문자열의 '최대공약문자열' C를 아래와 같이 정의하자.
-  1. 문자열 C를 반복하여 문자열 A와 B를 생성할 수 있다.
-  2. 가능한 C 중에 가장 긴 문자열을 C로 한다.
-  3. 위 조건을 만족하는 C가 없으면 빈 문자열을 C로 한다.
+
+1. 문자열 C를 반복하여 문자열 A와 B를 생성할 수 있다.
+1. 가능한 C 중에 가장 긴 문자열을 C로 한다.
+1. 위 조건을 만족하는 C가 없으면 빈 문자열을 C로 한다.
+
 이 때, 문자열 A와 B를 입력받아 C를 출력하는 프로그램을 작성하시오.
 
 예시입력1
-
-```py
+```python
 A = 'ababcde'
 B = 'ababcde'
 출력: 'ababcde'
 ```
 
 예시입력2
-
-```py
+```python
 A = 'ababababab'
 B = 'abab'
 출력: 'ab'
 ```
 
 예시입력3
-
-```py
+```python
 A = 'abababab'
 B = 'abab'
 출력: 'abab'
 ```
 
-예시입력4
-
-```py
+예시입력3
+```python
 A = 'fast'
 B = 'campus'
 출력: ''
 ```
 
-```py
+```python
 def gcdString(A, B):
-  pass
+    pass
 ```
+----
 
-과제2 강사님 답안
 
-```py
+### 과제2 답안(25/25)
+
 - 탐욕 알고리즘으로 적절한 답안을 찾아내는 문제였습니다.
 - 문제에서 제시하는 정의에 맞게 잘 구현해 주셨습니다 :)
- 
+
 예시 답안)
- 
+
 ```python
- 
+
 def gcdString(A, B):
     def isDivisor(string, divisor):
         n = len(divisor)
         if len(string) % n != 0:
             return False
- 
+        
         while string != '':
             if string[:n] != divisor:
                 return False
             string = string[n:]
         return True
- 
+    
     if len(A) > len(B):
         str1, str2 = A, B
     else:
         str1, str2 = B, A
- 
+    
     divisor = str2
     m = 1
     while divisor != '':
@@ -1680,52 +1722,67 @@ def gcdString(A, B):
         m += 1
         divisor = str2[:len(str2) // m]
     return ''
- 
+
 A = 'ababcde'
 B = 'ababcde'
 print(gcdString(A, B))
- 
+
 A = 'ababababab'
 B = 'abab'
 print(gcdString(A, B))
- 
+
 A = 'abababab'
 B = 'abab'
 print(gcdString(A, B))
- 
+
 A = 'fast'
 B = 'campus'
 print(gcdString(A, B))
 ```
 
 
-과제3.
-n개의 노드가 있는 그래프가 있다. 각 노드는 1부터 n까지 번호가 적혀있다. 1번 노드에서 가장 멀리 떨어진 노드의 갯수를 구하려고 한다.
-가장 멀리 떨어진 노드란 최단경로로 이동했을 때 간선의 개수가 가장 많은 노드들을 의미한다.
-노드의 개수 n, 간선에 대한 정보가 담긴 2차원 배열 vertex가 매개변수로 주어질 때, 1번 노드로부터 가장 멀리 떨어진 노드가 몇 개인지를 return 하도록
-solution 함수를 작성하라
+## 과제3.
+
+----
+n개의 노드가 있는 그래프가 있다. 각 노드는 1부터 n까지 번호가 적혀있다. 1번 노드에서 가장 멀리 떨어진 노드의 갯수를 구하려고 한다. 가장 멀리 떨어진 노드란 최단경로로 이동했을 때 간선의 개수가 가장 많은 노드들을 의미한다.
+
+노드의 개수 n, 간선에 대한 정보가 담긴 2차원 배열 vertex가 매개변수로 주어질 때, 1번 노드로부터 가장 멀리 떨어진 노드가 몇 개인지를 return 하도록 solution 함수를 작성하라.
+
 - 제한사항
   - 노드의 개수 n은 2 이상 20,000 이하입니다.
   - 간선은 양방향이며 총 1개 이상 50,000개 이하의 간선이 있습니다.
-  - vertex 배열 각 행 [a, b]는 a번 노드와 b번 노드 사이에 간선이 있다는 의미입니다.
+  - vertex 배열 각 행 `[a, b]`는 a번 노드와 b번 노드 사이에 간선이 있다는 의미입니다.
+
 - 입출력 예
-  
-```py
+
+|n|vertex|return|
+|--|-----|------|
+|6|`[[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]`|3|
+
+
+```python
 def solution(n, vertex):
-  return 0
+    return 0
+
 ```
 
-과제3 강사님 답안
+----
 
-```py
+
+### 과제3 답안(0/25)
+
 - 그래프 구조에서 최단 거리를 구하는 문제였습니다.
 - 다익스트라 알고리즘을 구현하면 되는 문제였습니다 :)
+
+예시 답안)
+
+```python
 import heapq
- 
+
 def solution(n, vertex):
     to_visit = []
     dists = [float('inf')] * (n + 1)
- 
+    
     dists[1] = 0
     heapq.heappush(to_visit, (0, 1))
     while len(to_visit) > 0:
@@ -1736,29 +1793,56 @@ def solution(n, vertex):
             if dists[adj_node] > dist + 1:
                 dists[adj_node] = dist + 1
                 heapq.heappush(to_visit, (dists[adj_node], adj_node))
- 
+    
     return dists.count(max(dists[1:]))
- 
+    
 n = 6
 vertex = [[3, 6], [4, 3], [3, 2], [1, 3], [1, 2], [2, 4], [5, 2]]
 print(solution(n, vertex))
 ```
 
 
-과제4.
+## 과제4.
+
+----
 마을에 1부터 N의 고유 번호를 가진 사람들이 있다. 소문으로는 마을 사람 중에 마을 판사가 있다고 한다. 마을 판사가 실제로 존재한다면,
+
 - 마을 판사는 아무도 믿지 않는다.
 - 다른 모든 사람들은 마을 판사를 믿는다.
 - 마을 판사가 있다면 오직 한명 뿐이다.
-리스트 trust가 주어졌을 때, trust[i] = [a, b]는 고유 번호가 a인 사람이 고유 번호가 b인 사람을 믿는다는 것을 의미한다고 한다.
+
+리스트 trust가 주어졌을 때, `trust[i] = [a, b]`는 고유 번호가 a인 사람이 고유 번호가 b인 사람을 믿는다는 것을 의미한다고 한다. 
+
 마을 판사가 존재한다면 마을 판사의 고유 번호를, 존재하지 않는다면 -1을 출력하는 프로그램을 작성하시오.
+
 (단, a가 b를 믿고 b가 c를 믿는다고 할 때, a가 c를 믿는다는 의미는 아니다.)
 
-과제4 강사님 답안
+예시입력
 
-```py
+|N| trust| 출력|
+|-|------|----|
+|2| `[[1,2]]`| 2|
+|3| `[[1,3],[2,3]]` | 3 |
+|3| `[[1,3],[2,3],[3,1]]`| -1 |
+|3|`[[1,2],[2,3]]` | -1 |
+|4|`[[1,3],[1,4],[2,3],[2,4],[4,3]]`| 3 |
+
+```python
+def solution(N, trust):
+    return -1
+```
+
+----
+
+
+### 과제4 답안(25/25)
+
 - 그래프 구조의 구성을 이해하는 문제였습니다.
 - 잘 구현해 주셨습니다! :) 아래 예시 답안도 확인해 주세요 :)
+
+예시 답안)
+
+```python
 def solution(N, trust):
     for i in range(1, N + 1):
         if len(list(filter(lambda x: x[0] == i, trust))) > 0:
@@ -1766,7 +1850,7 @@ def solution(N, trust):
         if len(list(filter(lambda x: x[1] == i, trust))) == N - 1:
             return i
     return -1
- 
+
 print(solution(2, [[1,2]])) # 2
 print(solution(3, [[1,3],[2,3]])) #3
 print(solution(3, [[1,3],[2,3],[3,1]])) #-1
@@ -1774,285 +1858,614 @@ print(solution(3, [[1,2],[2,3]])) #-1
 print(solution(4, [[1,3],[1,4],[2,3],[2,4],[4,3]])) #3
 ```
 
+
+
+
 ### Report 6 (2021/04/22 ~ 2021/04/25)
 
-과제1.
-리스트 [1,2,3,...,n]를 섞는 방법은 총 n!가지이다. n = 3일 때 3! = 6개의 섞은 결과는 아래와 같은 순서를 가진다고 하자
 
-```py
+## 과제1.
+
+----
+리스트 `[1,2,3,...,n]` 를 섞는 방법은 총 `n!` 가지이다. `n = 3`일 때 `3! = 6`개의 섞은 결과는 아래와 같은 순서를 가진다고 하자.
+
+```python
 [1, 2, 3]
 [1, 3, 2]
 [2, 1, 3]
 [2, 3, 1]
 [3, 1, 2]
 [3, 2, 1]
-
-def solution(n, k):
-  return []
 ```
 
-n과 k가 주어졌을 때, k번째 섞은 결과를 반환하시오. (단, 1 <= n <= 9, 1 <= k <= n!)
+n과 k가 주어졌을 때, k번째 섞은 결과를 반환하시오. (단, `1 <= n <= 9`, `1 <= k <= n!`)
+
 예시입력
 
-n = 3, k = 3일 때
-return = [2, 1, 3]
+|n|k|return|
+|-|-|--|
+|3|3|`[2, 1, 3]`|
+|4|9|`[2, 3, 1, 4]`|
 
-n = 4, k = 9일 때
-return = [2, 3, 1, 4]
+```python
+def solution(n, k):
+    return []
+```
+----
+
+### 과제1 답안(0/20)
+
+- 탐욕법을 이용하여 가능한 조합을 빠르게 계산하는 문제였습니다.
+- factorial은 동적계획법을 이용하고, 조합 계산은 탐욕법을 사용하는 응용 형식으로 문제를 해결할 수 있습니다 :)
+- 아래 예시 답안을 확인해 주세요!
+
+예시 답안)
+
+```python
+def solution(n, k):
+    fact = {0: 1}
+    def factorial(num):
+        if num in fact:
+            return fact[num]
+        val = factorial(num - 1) * num
+        fact[num] = val
+        return val
+    
+    remainder = k - 1
+    seq = [i for i in range(1, n + 1)]
+    ans = []
+    for i in range(n - 1, 0, -1):
+        div = factorial(i)
+        val = remainder // div
+        remainder %= div
+        ans.append(seq[val])
+        del seq[val]
+    ans.append(seq[0])
+    return ans
+
+print(solution(3, 3))
+print(solution(4, 9))
+```
 
 
+## 과제2.
 
-과제2.
+----
 아래와 같이 5와 사칙연산만으로 12를 표현할 수 있습니다.
+
+```
 12 = 5 + 5 + (5 / 5) + (5 / 5)
 12 = 55 / 5 + 5 / 5
 12 = (55 + 5) / 5
+```
 
-5를 사용한 횟수는 각각 6, 5, 4입니다. 그리고 이중 가장 작은 경우는 4입니다.
-이처럼 숫자 N과 number가 주어질 때, N과 사칙연산만 사용해서 표현할 수 있는 방법 중
-N 사용횟수의 최솟값을 return 하도록 solution 함수를 작성하세요
+5를 사용한 횟수는 각각 6,5,4 입니다. 그리고 이중 가장 작은 경우는 4입니다.
+이처럼 숫자 N과 number가 주어질 때, N과 사칙연산만 사용해서 표현 할 수 있는 방법 중 N 사용횟수의 최솟값을 return 하도록 solution 함수를 작성하세요.
 
 제한사항
+
 - N은 1 이상 9 이하입니다.
 - number는 1 이상 32,000 이하입니다.
 - 수식에는 괄호와 사칙연산만 가능하며 나누기 연산에서 나머지는 무시합니다.
 - 최솟값이 8보다 크면 -1을 return 합니다.
 
 입출력 예
-(1) N = 5, number = 12일 때,
-    return = 4
-(2) N = 2, number = 11일 때,
-    return = 3
-    
-입출력 예 설명
-- 예제 #1: 문제에 나온 예와 같습니다.
-- 예제 #2: 11 = 22 / 2와 같이 2를 3번만 사용하여 표현할 수 있습니다.
 
-```py
+|N|number|return|
+|-|------|-----|
+|5|12|4|
+|2|11|3|
+
+입출력 예 설명
+
+- 예제 #1: 문제에 나온 예와 같습니다.
+- 예제 #2: `11 = 22 / 2`와 같이 2를 3번만 사용하여 표현할 수 있습니다.
+
+```python
 def solution(N, number)
-  return 0
+    return 0
+```
+----
+
+
+### 과제2 답안(20/20)
+
+- 동적계획법을 이용해, 부분 문제의 결과를 취합해 더 복잡한 문제를 해결하는 문제였습니다.
+- 문제의 요구사항에 맞게 충실하게 잘 구현해 주셨습니다! :)
+- 아래 예시 답안을 확인해 주세요 :)
+
+예시 답안)
+
+```python
+def solution(N, number):
+    sets = [{}, {N}]
+    
+    if N == number:
+        return 1
+    
+    for i in range(2, 9):
+        current_set = {int(str(N)*i)}
+        for j in range(1, i // 2 + 1):
+            for val_j in sets[j]:
+                for val_k in sets[i - j]:
+                    current_set.add(val_j + val_k)
+                    current_set.add(val_j - val_k)
+                    current_set.add(val_k - val_j)
+                    current_set.add(val_j * val_k)
+                    if val_k != 0:
+                        current_set.add(val_j // val_k)
+                    if val_j != 0:
+                        current_set.add(val_k // val_j)
+                    
+                    if number in current_set:
+                        return i
+        sets.append(current_set)
+    return -1
 ```
 
-과제3.
-n개의 정수로 이루어진 리스트 nums와 정수 target이 주어졌을 때, nums에 있는 정수 4개를 합하여 target을 만들 수 있는
-모든 조합을 구하시오. 단, 정답에는 동일한 정수 조합이 여러개 포함되어서는 안된다.
+
+## 과제3.
+
+----
+n개의 정수로 이루어진 리스트 nums와 정수 target이 주어졌을 때, nums에 있는 정수 4개를 합하여 target을 만들 수 있는 모든 조합을 구하시오. 단, 정답에는 동일한 정수 조합이 여러개 포함되어서는 안된다.
 
 예시 입력
-```py
+```python
 nums = [1, 0, -1, 0, -2, 2]
 target = 0
-
+```
 출력:
-
+```
 [
-  [-1, 0, 0, 1],
+  [-1,  0, 0, 1],
   [-2, -1, 1, 2],
-  [-2, 0, 0, 2]
+  [-2,  0, 0, 2]
 ]
-
-def solution(nums, target):
-  return []
 ```
 
-과제4.
-정수로 이루어진 수열 x가 주어졌을 때, x[i-1] < x[i], x[i+1] < x[i]인 x[i]를 피크라고 부른다.
-a에 피크가 단 하나 반드시 존재할 때, 이 피크를 찾아 출력하는 O(logN) 알고리즘을 구현하시오.
+```python
+def solution(nums, target):
+    return []
+```
+
+----
+
+### 과제3 답안(20/20)
+
+- 주어진 문제에 맞게 충실하게 잘 구현해 주셨습니다! :)
+- 아래 예시답안도 확인해 보시고 비교해 보세요 :)
+
+예시 답안)
+
+```python
+def solution(nums, target):
+    n = len(nums)
+    sets = []
+    ans = []
+    for i in range(n - 3):
+        for j in range(i + 1, n - 2):
+            for k in range(j + 1, n - 1):
+                for l in range(k + 1, n):
+                    curr = [nums[i], nums[j], nums[k], nums[l]]
+                    if sum(curr) == target:
+                        if set(curr) not in sets:
+                            ans.append(curr)
+                            sets.append(set(curr))
+    return ans
+```
+
+
+
+## 과제4.
+
+----
+정수로 이루어진 수열 x가 주어졌을 때, `x[i-1] < x[i], x[i+1] < x[i]`인 `x[i]`를 피크라고 부른다. a에 피크가 단 하나 반드시 존재할 때, 이 피크를 찾아 출력하는 `O(logN)` 알고리즘을 구현하시오.
 
 예시 입력
-x = [-4, -4, -2, 0, 0, 2, 4, 5, 6, 3, 2, -4, -6]
-return 6
 
-x = [-1, -1, -1, -1, 0, 1, 20, 19, 17]
-return 20
+|x | return|
+|--|----|
+|`[-4, -4, -2, 0, 0, 2, 4, 5, 6, 3, 2, -4, -6]` | 6 |
+|`[-1, -1, -1, -1, 0, 1, 20, 19, 17]` | 20 |
 
+```python
 def solution(x):
-  return 0
-  
-  
-과제5.
-그래프를 DFS로 탐색한 결과를 출력하는 프로그램을 작성하시오. 단, 방문할 수 있는 정점이 여러 개인 경우에는
-정점 번호가 작은 것을 먼저 방문하고, 더 이상 방문할 수 있는 점이 없는 경우 종료한다. 정점 번호는 1번부터 N번까지이다.
-- 입력: 첫째 줄에 정점의 개수 N(1 <= N <= 1,000), 간선의 개수 M(1 <= M <= 10,000), 탐색을 시작할 정점의 번호 V가 주어진다.
-       다음 M개의 줄에는 간선이 연결하는 두 정점의 번호가 주어진다. 어떤 두 정점 사이에 여러 개의 간선이 있을 수 있다.
-       입력으로 주어지는 간선은 양방향이다.
-- 출력: V부터 방문된 점을 순서대로 출력한다.
-- 예시 입출력
-N = 4, M = 5, V = 1이고, edges가 [[1, 2], [1, 3], [1, 4], [2, 3], [3, 4]]일 때,
-출력은 1, 2, 3, 4
-
-```py
-N, M, V = 4, 5, 1
-edges = [[1, 2], [1, 3], [1, 4], [2, 3], [3, 4]]
-
-def solution(N, M, V, edges):
-  def dfs(start):
-    pass # 여기에 dfs 함수를 완성하세요.
-  dfs(v)
+    return 0
 ```
+
+----
+
+
+### 과제4 답안(0/20)
+
+- 이진 탐색의 응용문제로, O(logN) 복잡도를 실현하는 문제였습니다.
+- 기능 구현은 다양하게 가능하나, 이진 탐색으로 구현해야 O(N)이 아닌 O(logN)으로 동작하는 점 확인해 주세요 :)
+
+예시 답안)
+
+```python
+def solution(x):
+    n = len(x)
+    
+    if n < 3:
+        return None
+    
+    mid = x[n//2 - 1 : n // 2 + 2]
+    left = x[:n//2 + 1]
+    right = x[n//2:]
+    
+    if mid[0] < mid[1] and mid[1] > mid[2]:
+        return mid[1]
+    elif mid[0] > mid[1]:
+        return solution(left)
+    else:
+        return solution(right)
+
+print(solution([-4, -4, -2, 0, 0, 2, 4, 5, 6, 3, 2, -4, -6]))
+print(solution([-1, -1, -1, -1, 0, 1, 20, 19, 17]))
+```
+
+
+## 과제5.
+
+----
+
+그래프를 DFS로 탐색한 결과를 출력하는 프로그램을 작성하시오. 단, 방문할 수 있는 정점이 여러 개인 경우에는 정점 번호가 작은 것을 먼저 방문하고, 더 이상 방문할 수 있는 점이 없는 경우 종료한다. 정점 번호는 1번부터 N번까지이다.
+
+- 입력: 첫째 줄에 정점의 개수 N(1 ≤ N ≤ 1,000), 간선의 개수 M(1 ≤ M ≤ 10,000), 탐색을 시작할 정점의 번호 V가 주어진다. 다음 M개의 줄에는 간선이 연결하는 두 정점의 번호가 주어진다. 어떤 두 정점 사이에 여러 개의 간선이 있을 수 있다. 입력으로 주어지는 간선은 양방향이다.
+
+- 출력: V부터 방문된 점을 순서대로 출력한다.
+
+- 예시 입출력
+
+|N| M| V| edges| 출력|
+|--|--|--|-----|-------|
+|4|5|1|[[1, 2], [1, 3], [1,4], [2, 3], [3, 4]]|1 2 3 4|
+
+----
+
+### 과제5 답안(20/20)
+
+- DFS를 구현하는 문제였습니다.
+- 잘 구현해 주셨습니다 :) 아래 예시 답안과 테스트 코드도 확인해 보세요!
+
+예시 답안)
+
+```python
+def solution(N, M, V, edges):
+    visited = []
+    adj_lists = [[]]*(N + 1)
+    for i in range(1, N + 1):
+        adj_list = list(map(lambda x:x[1], (filter(lambda x:x[0] == i, edges)))) + list(map(lambda x:x[0], (filter(lambda x:x[1] == i, edges))))
+        adj_list.sort()
+        adj_lists[i] = adj_list
+    
+    def dfs(node):
+        visited.append(node)
+        print(node, end=' ')
+        for n in adj_lists[node]:
+            if n not in visited:
+                dfs(n)
+    dfs(V)
+    
+N, M, V = 4, 5, 1
+edges = [[1, 2], [1, 3], [1,4], [2, 3], [3, 4]]
+solution(N, M, V, edges)
+```
+  
+
 
 ### Report 7 (2021/04/29 ~ 2021/05/02)
 
-과제1.
-0 또는 양의 정수가 주어졌을 때, 정수를 이어 붙여 만들 수 있는 가장 큰 수를 알아내 주세요
-예를 들어, 주어진 정수가 [6, 10, 2]라면 [6102, 6210, 1062, 1026, 2610, 2106]를 만들 수 있고, 이중 가장 큰 수는 6210입니다.
-0 또는 양의 정수가 담긴 배열 numbers가 매개변수로 주어질 때, 순서를 재배치하여 만들 수 있는 가장 큰 수를 문자열로 바꾸어 return 하도록
-solution 함수를 작성해주세요.
+
+## 과제1.
+
+----
+0 또는 양의 정수가 주어졌을 때, 정수를 이어 붙여 만들 수 있는 가장 큰 수를 알아내 주세요.
+
+예를 들어, 주어진 정수가 `[6, 10, 2]`라면 `[6102, 6210, 1062, 1026, 2610, 2106]`를 만들 수 있고, 이중 가장 큰 수는 `6210`입니다.
+
+0 또는 양의 정수가 담긴 배열 numbers가 매개변수로 주어질 때, 순서를 재배치하여 만들 수 있는 가장 큰 수를 문자열로 바꾸어 return 하도록 solution 함수를 작성해주세요.
 
 - 제한 사항
   - numbers의 길이는 1 이상 100,000 이하입니다.
   - numbers의 원소는 0 이상 1,000 이하입니다.
   - 정답이 너무 클 수 있으니 문자열로 바꾸어 return 합니다.
-- 입출력 예
-  - numbers가 [6, 10, 2]일 때, return은 6210
-  - numbers가 [3, 30, 34, 5, 9]일 때, return은 9534330
 
-```py
+- 입출력 예
+
+
+  | numbers | return |
+  |--------|--------|
+  |`[6, 10, 2]` | 6210 |
+  |`[3, 30, 34, 5, 9]` | 9534330 |
+
+
+```python
+def solution(numbers):
+    answer = 0
+    return answer
+```
+----
+
+### 과제1 답안(25/25)
+
+- 정렬 기준을 설정하고, 정렬을 할 수 있는지 여부를 묻는 문제였습니다.
+- 정답을 잘 구현해 주셨습니다! 아래 예시 답안도 확인해 주세요 :)
+
+예시 답안)
+
+```python
+
+def cmp_to_key(mycmp):
+    'Convert a cmp= function into a key= function'
+    class K:
+        def __init__(self, obj, *args):
+            self.obj = obj
+        def __lt__(self, other):
+            return mycmp(self.obj, other.obj) < 0
+        def __gt__(self, other):
+            return mycmp(self.obj, other.obj) > 0
+        def __eq__(self, other):
+            return mycmp(self.obj, other.obj) == 0
+        def __le__(self, other):
+            return mycmp(self.obj, other.obj) <= 0
+        def __ge__(self, other):
+            return mycmp(self.obj, other.obj) >= 0
+        def __ne__(self, other):
+            return mycmp(self.obj, other.obj) != 0
+    return K
+
+def compare(x, y):
+    a = int(str(x) + str(y))
+    b = int(str(y) + str(x))
+    return b - a
+
+def solution(numbers):
+    numbers.sort(key=cmp_to_key(compare))
+    answer = ''.join(list(map(str, numbers)))
+    
+    if answer[0] == '0':
+        answer = str(int(answer))
+    
+    return answer
+
+print(solution([6, 10, 2]))
+print(solution([3, 30, 34, 5, 9]))
+```
+
+
+## 과제2.
+
+----
+여러 개의 구간이 리스트 intervals로 주어졌을 때, 겹치는 구간을 모두 병합하여 출력하시오.
+
+입력 예시1
+
+```
+입력: intervals = [[1,3],[2,6],[8,10],[15,18]]
+출력: [[1,6],[8,10],[15,18]]
+설명: 구간 [1,3]와 [2,6]이 겹치므로, [1,6]으로 병합하였다.
+```
+
+입력 예시 2
+
+```
+입력: intervals = [[1,4],[4,5]]
+출력: [[1,5]]
+설명: 구간 [1,4]와 [4,5]는 겹치는 것으로 간주한다.
+```
+
+```python
 def solution(intervals)
     return []
 ```
+----
 
-과제2.
-여러 개의 구간이 리스트 intervlas로 주어졌을 때, 겹치는 구간을 모두 병합하여 출력하시오
-입력 예시 1
-입력: intervals = [[1, 3], [2, 6], [8, 10], [15, 18]]
-출력: [[1, 6], [8, 10], [15, 18]]
-설명: 구간 [1,3]와 [2,6]이 겹치므로, [1,6]으로 병합하였다.
+### 과제2 답안(25/25)
 
-입력 예시 2
-입력: intervals = [[1, 4], [4, 5]]
-출력: [[1, 5]]
-설명: 구간 [1, 4]와 [4, 5]는 겹치는 것으로 간주한다.
+- 재귀적으로 구현하면 비교적 쉽게 구현할 수 있는 구현 문제였습니다.
+- 요구사항에 맞게 잘 구현해 주셨습니다! :) 아래 예시 답안도 확인해 주세요 :)
 
-```py
+예시 답안)
+
+```python
+
+def solution(intervals):
+    intervals.sort()
+    
+    def merge(x):
+        if len(x) <= 1:
+            return x
+        
+        to_merge = [x[0]]
+        del x[0]
+        while len(x) > 0:
+            if to_merge[0][1] >= x[0][0]:
+                to_merge.append(x[0])
+                del x[0]
+            else:
+                break
+        
+        merged = [to_merge[0][0], max(map(lambda e: e[1], to_merge))]
+        return [merged] + merge(x)
+    
+    return merge(intervals)
+
+intervals = [[1,3],[2,6],[8,10],[15,18]]
+print(solution(intervals))
+
+intervals = [[1,4],[4,5]]
+print(solution(intervals))
 ```
 
-과제3.
+
+## 과제3.
+
+----
 문자열 s1, s2, s3가 주어졌을 때, 문자열 s3가 문자열 s1과 s2를 교차로 배치하여 만들어질 수 있는지 여부를 출력하라.
-예시 입력 1
+
+예시 입력1
+
+```
 입력: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbcbcac"
 출력: True
+```
+예시 입력2
 
-예시 입력 2
+```
 입력: s1 = "aabcc", s2 = "dbbca", s3 = "aadbbbaccc"
 출력: False
+```
 
-
-```py
+```python
 def solution(s1, s2, s3):
     return False
 ```
 
-과제4.
-2개의 단어 beginWord와 endWord, 그리고 여러 개의 단어 wordList가 주어졌을 때,
-beginWord에서 endWord로 변환하기 위해 필요한 가장 적은 변환 횟수를 구하시오
+----
+
+### 과제3 답안(25/25)
+
+- 그래프를 탐색하는 문제였습니다!
+- DFS를 이용하면 효율적으로 동작하는 알고리즘을 구현할 수 있습니다. 아래 예시답안을 확인해 주세요 :)
+
+예시 답안)
+
+```python
+def solution(s1, s2, s3):
+    found = False
+    
+    def dfs(str1, str2, str3):
+        nonlocal found
+        n, m = len(str1), len(str2)
+        
+        if found is True:
+            return
+        
+        if str3 == s3:
+            found = True
+            return
+        
+        if n > 0 and str1[0] == s3[len(str3)]:
+            dfs(str1[1:], str2, str3 + str1[0])
+        
+        if m > 0 and str2[0] == s3[len(str3)]:
+            dfs(str1, str2[1:], str3 + str2[0])
+    
+    dfs(s1, s2, '')
+    return found
+
+s1 = "aabcc"
+s2 = "dbbca"
+s3 = "aadbbcbcac"
+print(solution(s1, s2, s3))
+
+s1 = "aabcc"
+s2 = "dbbca"
+s3 = "aadbbbaccc"
+print(solution(s1, s2, s3))
+```
+
+
+## 과제4.
+
+----
+2개의 단어 beginWord와 endWord, 그리고 여러개의 단어 wordList가 주어졌을 때, beginWord에서 endWord로 변환하기 위해 필요한 가장 적은 변환 횟수를 구하시오.
+
 - 변환 조건
   - 단어는 wordList에 있는 단어로만 변환할 수 있다.
   - 단어를 변환할 때에는 한번에 하나씩의 문자만 바꿀 수 있다.
+
 - 문제 조건
-  - endWord로의 변환이 불가한 경우에는 0을 출력하시오
+  - endWord로의 변환이 불가한 경우에는 0을 출력하시오.
   - 문제에 등장하는 모든 단어의 길이는 같으며, 알파벳 소문자로만 이루어져 있다.
   - wordList에는 겹치는 단어가 없다.
   - beginWord와 endWord는 같은 단어로 주어지지 않는다.
 
-예시 입력 1
+예시 입력1
+
+```
 입력:
 beginWord = "hit",
 endWord = "cog",
 wordList = ["hot","dot","dog","lot","log","cog"]
- 
-출력: 5
- 
-설명: 가장 짧은 변환 방법은 "hit" -> "hot" -> "dot" -> "dog" -> "cog"이다.
 
-예시 입력 2
+출력: 5
+
+설명: 가장 짧은 변환 방법은 "hit" -> "hot" -> "dot" -> "dog" -> "cog"이다.
+```
+
+예시 입력2
+
+```
 입력:
 beginWord = "hit"
 endWord = "cog"
 wordList = ["hot","dot","dog","lot","log"]
- 
-출력: 0
- 
-설명: endWord인 "cog"가 wordList에 없으므로, endWord로 변환할 수 있는 방법이 없다.
 
-```py
+출력: 0
+
+설명: endWord인 "cog"가 wordList에 없으므로, endWord로 변환할 수 있는 방법이 없다.
+```
+
+```python
 def solution(beginWord, endWord, wordList):
     return 0
 ```
 
-### Report 8 (2021/05/06 ~ 2021/05/09)
+----
 
-과제1.
-패캠이는 아메바를 분열시키는 취미가 생겼다. 패캠이는 아메바 하나하나가 모두 소중하기 때문에, 새로 생겨난 아메바는 모두 새로운 이름을 지어주기로 하였다. 
-이번에 분열하기로 한 아메바는 아래와 같은 특성을 가진다.
+### 과제4 답안(0/25)
 
-- 아메바가 분열하여 두 개체로 완전히 나뉘는 데에는 1분이 걸린다.
-- 분열한 아메바 중 하나는 곧바로 분열을 시작하고, 다른 하나는 1분간 휴식 후 분열을 시작한다.
-- 분열하면 기존의 개체는 사라지고 새로운 두 개체가 생긴 것으로 본다.
-- 분열되는 도중에는 기존의 개체가 남아있고, 아직 새로운 개체가 생겨나지 않은 것으로 본다.
-- 패캠이는 아메바 한 개체를 분열 시키기 시작한 후, N분 후까지 만들어진 모든 아메바 개체에 새로운 이름을 지어주기로 했다. 패캠이가 준비해야 하는 아메바의 이름은 총 몇 개인가?
+- 문제를 그래프로 해석하여 탐색하는 문제였습니다.
+- 한 문자씩 차이나는 단어로 인접 리스트를 구현하는 문제였습니다 :) 아래 예시 답안을 확인해주세요!
 
-입출력 예
-입력 2 -> 출력 5
-입력 4 -> 출력 15
+예시 답안)
 
-```py
-def solution(N):
-    answer = 0
-    return answer
+```python
+
+def isAdj(s1, s2):
+    count = 0
+    for c1, c2 in zip(s1, s2):
+        if c1 != c2:
+            count += 1
+        if count > 1:
+            return False
+    return count == 1
+    
+
+def solution(beginWord, endWord, wordList):
+    adjMap = {w: list(filter(lambda ww: isAdj(w, ww), wordList)) for w in wordList}
+    adjList = list(filter(lambda w: isAdj(beginWord, w), wordList))
+    visited = set()
+    queue = list(map(lambda x: (1, x), adjList))
+    
+    while len(queue) > 0:
+        count, word = queue.pop()
+        
+        if word == endWord:
+            return count + 1
+        
+        if word not in visited:
+            visited.add(word)
+            queue = list(map(lambda x: (count + 1, x), adjMap[word])) + queue
+            
+    return 0
+
+
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log","cog"]
+print(solution(beginWord, endWord, wordList))
+
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log"]
+print(solution(beginWord, endWord, wordList))
 ```
 
-과제2.
-철수는 개발자에서 은퇴하여 치킨집을 하게 되었다. 철수는 뛰어난 개발 실력으로 N대의 자동 튀김기를 만들어냈다. i번째 자동 튀김기는 치킨을 한 번 튀기는 데에 fry[i] 만큼의 시간이 걸리며, 튀김이 한번 끝나면 clean[i] 만큼의 시간동안 자동 세척을 한다.
 
-철수가 C 번 치킨을 튀겨내려고 할 때, 최소한 몇 시간 동안 자동 튀김기를 가동해야 하는지 계산하시오.
-
-제약 사항
-- 0 < N <= 100000
-- fry[i]는 0 < fry[i] <= 100를 만족하는 정수
-- clean[i]는 0 < clean[i] <= 100를 만족하는 정수
-- 0 < C <= 100000
-입출력 예
-N=2, fry=[3, 6], clean=[2, 1], C=20, return=58
-N=4, fry=[2, 2, 1, 3], clean=[2, 4, 3, 2], C=2, return=2
-
-```py
-def solution(N, fry, clean, C)
-    answer = 0
-    return answer
-```
-
-과제3.
-민수는 최근 숫자 세기 놀이에 푹 빠져있다. 민수는 숫자를 N진수로 세며, 9보다 큰 숫자는 한자리로 표현하기 위해 아래와 같이 바꾸어서 센다.
-
-10 ~ 35: a~z (알파벳 소문자)
-36 ~ 61: A~Z (알파벳 대문자)
-민수가 N진수의 숫자를 start부터 end까지 센 결과를 counts라고 할 때, 민수가 잘 못 센 숫자의 개수를 반환하는 함수를 구현하시오.
-
-(단, 2 < N <= 61, start < end이며, counts의 길이는 (end - start + 1)이다.)
-
-입출력 예시
-N=13, start='9', end='d', counts=['9', 'a', 'c', 'd', 'e'], return=3
-N=62, start='z', end='12', counts=['z', '10', '11', '12'], return=0
-
-```py
-def solution(N, start, end, counts):
-    answer = 0
-    return answer
-```
-
-과제4.
-철수와 영희는 함께 여행을 가기로 했다. 단짝인 두 친구는 계속 붙어다니기로 하고 각자의 짐을 모두 모아서, 
-두 가방에 적절하게 함께 나누어 담기로 했다. 즉, 총 N개의 짐을 무게 K1, K2만큼 담을 수 있는 가방에 각각 나누어 담고자 한다. 
-i번째 짐의 무게와 가치가 각각 W[i]와 V[i]로 주어졌을 때, 두 사람이 담을 수 있는 짐의 가치의 합 중 최대값을 구하시오.
-
-입출력 예시
-N=4, K1=3, K2=8, W=[1, 5, 6, 3], V=[5, 2, 14, 6], return=19
-
-```py
-def solution(N, K1, K2, W, V):
-    answer = 0
-    return answer
-```
 
 ### Report 8 (2021/05/06 ~ 2021/05/09)
 
@@ -2085,6 +2498,8 @@ def solution(N):
 ```
 ----
 
+
+
 ## 과제2.
 
 ----
@@ -2114,6 +2529,8 @@ def solution(N, fry, clean, C)
 ```
 ----
 
+
+
 ## 과제3.
 
 ----
@@ -2141,6 +2558,10 @@ def solution(N, start, end, counts):
     return answer
 ```
 
+----
+
+
+
 ## 과제4.
 
 ----
@@ -2162,115 +2583,142 @@ def solution(N, K1, K2, W, V):
 
 ----
 
+
 ### Final Report (2021/05/06 ~ 2021/05/09)
 
-과제1.
+## 과제1.
+
+----
 문자열을 뒤에서부터 읽어도 원래 문자열과 같은 단어를 팰린드롬이라 한다.
+
 입력으로 주어진 문자열이 팰린드롬인지 판별한 뒤, 팰린드롬이면 빈 문자열을 출력한다.
+
 입력된 문자열이 팰린드롬이 아닐 경우 문자열을 반으로 나누어 앞부분의 단어를 기준으로 팰린드롬 단어로 만드는 함수를 작성하시오.
 
 예시 입력1
 
+```
 입력: s = 'abcdcba'
 출력: ''
+```
 
 예시 입력2
 
+```
 입력: s = 'bannana'
 출력: 'bannab'
+```
 
 예시 입력3
 
+```
 입력: s = 'wabe'
 출력: 'waaw'
+```
 
-```py
+```python
 def solution(s):
     return ''
- 
+
 s = 'abcdcba'
 print(solution(s))
- 
+
 s = 'bannana'
 print(solution(s))
- 
+
 s = 'wabe'
 print(solution(s))
 ```
+----
 
-과제2.
+## 과제2.
+
+----
 수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.
-마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 
-완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.
 
-제한사항
+마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.
 
-마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
-completion의 길이는 participant의 길이보다 1 작습니다.
-참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
-참가자 중에는 동명이인이 있을 수 있습니다.
+- 제한사항
+  - 마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
+  - completion의 길이는 participant의 길이보다 1 작습니다.
+  - 참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
+  - 참가자 중에는 동명이인이 있을 수 있습니다.
 
-입출력 예시
-(1) participant=["leo", "kiki", "eden"], completion=["eden", "kiki"], return="leo"
-(2) participant=["marina", "josipa", "nikola", "vinko", "filipa"], completion=["josipa", "filipa", "marina", "nikola"], return="vinko"
-(3) participant=["mislav", "stanko", "mislav", "ana"], completion=["stanko", "ana", "mislav"], return="mislav"
+- 입출력 예시
 
-입출력 예에 대한 설명
-- 예제 1: "leo"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.
-- 예제 2: "vinko"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.
-- 예제 3: "mislav"는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.
+|participant|completion|return|
+|-----|-------|------|
+|["leo", "kiki", "eden"]|["eden", "kiki"]|"leo"|
+|["marina", "josipa", "nikola", "vinko", "filipa"]| ["josipa", "filipa", "marina", "nikola"]|"vinko"| 
+|["mislav", "stanko", "mislav", "ana"]|["stanko", "ana", "mislav"]|"mislav"| 
 
-```py
+- 입출력 예에 대한 설명
+  - 예제 1: "leo"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.
+  - 예제 2: "vinko"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.
+  - 예제 3: "mislav"는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.
+
+```python
 def solution(participant, completion):
     return []
- 
+
 participant = ["leo", "kiki", "eden"]
 completion = ["eden", "kiki"]
 print(solution(participant, completion))
- 
+
 participant = ["marina", "josipa", "nikola", "vinko", "filipa"]
 completion = ["josipa", "filipa", "marina", "nikola"]
 print(solution(participant, completion))
- 
+
 participant = ["mislav", "stanko", "mislav", "ana"]
 completion = ["stanko", "ana", "mislav"]
 print(solution(participant, completion))
 ```
+----
 
-과제3.
+
+
+## 과제3.
+
+----
 배열 array의 i번째 숫자부터 j번째 숫자까지 자르고 정렬했을 때, k번째에 있는 수를 구하려 합니다.
 
 예를 들어 array가 [1, 5, 2, 6, 3, 7, 4], i = 2, j = 5, k = 3이라면,
 
-array의 2번째부터 5번째까지 자르면 [5, 2, 6, 3]입니다.
-1에서 나온 배열을 정렬하면 [2, 3, 5, 6]입니다.
-2에서 나온 배열의 3번째 숫자는 5입니다.
-배열 array, [i, j, k]를 원소로 가진 2차원 배열 commands가 매개변수로 주어질 때, 
-commands의 모든 원소에 대해 앞서 설명한 연산을 적용했을 때 나온 결과를 배열에 담아 return 하도록 solution 함수를 작성해주세요.
+- array의 2번째부터 5번째까지 자르면 [5, 2, 6, 3]입니다.
+- 1에서 나온 배열을 정렬하면 [2, 3, 5, 6]입니다.
+- 2에서 나온 배열의 3번째 숫자는 5입니다.
 
-제한사항
-- array의 길이는 1 이상 100 이하입니다.
-- array의 각 원소는 1 이상 100 이하입니다.
-- commands의 길이는 1 이상 50 이하입니다.
-- commands의 각 원소는 길이가 3입니다.
+배열 array, [i, j, k]를 원소로 가진 2차원 배열 commands가 매개변수로 주어질 때, commands의 모든 원소에 대해 앞서 설명한 연산을 적용했을 때 나온 결과를 배열에 담아 return 하도록 solution 함수를 작성해주세요.
 
-입출력 예
-array=[1, 5, 2, 6, 3, 7, 4], commands=[[2, 5, 3], [4, 4, 1], [1, 7, 3]], return=[5, 6, 3]
+- 제한사항
+  - array의 길이는 1 이상 100 이하입니다.
+  - array의 각 원소는 1 이상 100 이하입니다.
+  - commands의 길이는 1 이상 50 이하입니다.
+  - commands의 각 원소는 길이가 3입니다.
 
-입출력 예에 대한 설명
-- [1, 5, 2, 6, 3, 7, 4]를 2번째부터 5번째까지 자른 후 정렬합니다. [2, 3, 5, 6]의 세 번째 숫자는 5입니다.
-- [1, 5, 2, 6, 3, 7, 4]를 4번째부터 4번째까지 자른 후 정렬합니다. [6]의 첫 번째 숫자는 6입니다.
-- [1, 5, 2, 6, 3, 7, 4]를 1번째부터 7번째까지 자릅니다. [1, 2, 3, 4, 5, 6, 7]의 세 번째 숫자는 3입니다.
+- 입출력 예
 
-```py
+|array|commands|return|
+|-----|-------|------|
+|[1, 5, 2, 6, 3, 7, 4]|[[2, 5, 3], [4, 4, 1], [1, 7, 3]]|[5, 6, 3]|
+
+- 입출력 예에 대한 설명
+ - [1, 5, 2, 6, 3, 7, 4]를 2번째부터 5번째까지 자른 후 정렬합니다. [2, 3, 5, 6]의 세 번째 숫자는 5입니다.
+ - [1, 5, 2, 6, 3, 7, 4]를 4번째부터 4번째까지 자른 후 정렬합니다. [6]의 첫 번째 숫자는 6입니다.
+ - [1, 5, 2, 6, 3, 7, 4]를 1번째부터 7번째까지 자릅니다. [1, 2, 3, 4, 5, 6, 7]의 세 번째 숫자는 3입니다.
+
+```python
 def solution(array, commands):
     answer = []
     return answer
- 
+
 array = [1, 5, 2, 6, 3, 7, 4]
 commands = [[2, 5, 3], [4, 4, 1], [1, 7, 3]]
 print(solution(array, commands))
 ```
+
+----
+
 
 ## 과제4. 삼성 SW 역량 테스트 유사 문제
 
@@ -2350,20 +2798,7 @@ cost = [50, 40, 30, 20, 10, 10, 20, 30, 40, 50]
 print(solution(N, duration, cost))
 ```
 
-```py
-def solution(N, duration, cost):
-    dp = [0]*(N+1)
-    
-    def dynamic_programming():
-        max_val = 0
-        for i in range(N-1, -1, -1):
-           pass # 코드를 작성하여 함수를 완성하세요.
-
-        return max_val
-
-    result = dynamic_programming()
-    return result
-```
+----
 
 ## 과제5. 2020 KAKAO BLIND RECRUITMENT
 
@@ -2745,7 +3180,6 @@ print(solution("50*6-3*2"))
     - 그러므로 [1, 5]를 return 해주어야 합니다.
 
 ```python
-
 def solution(gems):
     return []
 

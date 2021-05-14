@@ -2631,6 +2631,29 @@ print(solution(s))
 ```
 ----
 
+### 과제1 답안(0/10)
+
+- 팰린드롬을 검사하고, 요구사항에 맞게 팰린드롬을 생성하는 문제입니다.
+- 아래 예시 답안을 확인해 주세요 :)
+
+예시 답안)
+
+```python
+def solution(s):
+    str_list = list(s)
+    if str_list == str_list[::-1]:
+        return ''
+    else:
+        q, r = divmod(len(str_list), 2) # 몫, 나머지
+        front = str_list[:q]
+        if r%2 == 0:
+            result = front + front[::-1]
+        else:
+            result = front + [str_list[q]] + front[::-1]
+        return(''.join(result))
+```
+
+
 ## 과제2.
 
 ----
@@ -2676,6 +2699,27 @@ print(solution(participant, completion))
 ----
 
 
+### 과제2 답안(10/10)
+
+- 해쉬테이블(딕셔너리)을 이용하여 중복 횟수를 검사하는 문제입니다.
+- 요구사항에 맞게 잘 구현해 주셨습니다! :)
+
+예시 답안)
+
+```python
+def solution(participant, completion):
+    d = {}
+    for x in participant:
+        d[x] = d.get(x,0)+1
+    
+    for x in completion:
+        d[x] -=1
+    
+    dnf = [k for k, v in d.items()if v>0]
+    answer = dnf[0]
+    return answer
+```
+
 
 ## 과제3.
 
@@ -2718,6 +2762,26 @@ print(solution(array, commands))
 ```
 
 ----
+
+
+### 과제3 답안(10/10)
+
+- 요구사항에 맞게 동작을 구현하는 문제입니다.
+- 잘 구현해 주셨습니다! 아래 예시 답안도 확인해 주세요 :)
+
+예시 답안)
+
+```python
+
+def solution(array, commands):
+    answer = []
+    for c in commands:
+        i, j, k = c
+        temp = array[i-1:j]
+        temp.sort()
+        answer.append(temp[k-1])
+    return answer
+```
 
 
 ## 과제4. 삼성 SW 역량 테스트 유사 문제
@@ -2800,6 +2864,32 @@ print(solution(N, duration, cost))
 
 ----
 
+### 과제4 (10/10)
+
+- 동적계획법을 이용하여 최선의 선택을 찾는 문제입니다.
+- 답안을 잘 작성해 주셨습니다! 아래 예시 답안도 확인해 주세요 :)
+
+```python
+def solution(N, duration, cost):
+    dp = [0]*(N+1)
+    
+    def dynamic_programming():
+        max_val = 0
+        for i in range(N-1, -1, -1):
+            time = duration[i]+i
+            if time <= N: # 기간 내 상담완료
+                dp[i] = max(cost[i]+dp[time], max_val)
+                max_val = dp[i]
+            else: # 기간 초과
+                dp[i] = max_val
+
+        return max_val
+
+    result = dynamic_programming()
+    return result
+```
+
+
 ## 과제5. 2020 KAKAO BLIND RECRUITMENT
 
 ----
@@ -2854,6 +2944,84 @@ print(solution(words, queries))
 ```
 
 ----
+
+### 과제5 답안(10/10)
+
+- Tree 자료구조를 응용한 Trie를 이용하는 문제입니다.
+- 문제를 잘 해결해 주셨습니다! 아래 예시 답안도 확인해 주세요 :)
+
+```python
+class Node:
+    def __init__(self, key):
+        self.key = key
+        self.child = dict()
+        self.count_leaf = 0
+
+
+class Trie:
+    def __init__(self):
+        self.head = Node(None)
+        self.word_count = 0
+
+    def insert(self, word):
+        curr = self.head
+        
+        for c in word:
+            if c not in curr.child:
+                curr.child[c] = Node(c)
+            curr = curr.child[c]
+            curr.count_leaf += 1
+            
+        curr.child['*'] = True
+        self.word_count += 1
+
+    def count_match(self, word):
+        curr = self.head
+        match_fail = False
+
+        for c in word:
+            if c != '?':
+                if c not in curr.child:
+                    match_fail = True
+                    break
+                curr = curr.child[c]
+            else:
+                return curr.count_leaf  # Case1: 와일드카드 매치
+                
+            if match_fail is True:
+                return 0                # Case2: 단어 매치가 없음
+        
+        return 1                        # Case3: 단어 매치
+    
+
+def solution(words, queries):
+    tries = dict()
+    inv_tries = dict()
+
+    for word in words:
+        word_len = len(word)
+        
+        if word_len not in tries:
+            tries[word_len] = Trie()
+            inv_tries[word_len] = Trie()
+            
+        tries[word_len].insert(word)
+        inv_tries[word_len].insert(word[::-1])
+
+    answer = list()
+    for query in queries:
+        query_len = len(query)
+        if query_len not in tries:
+            answer.append(0)                                             # Case1: 해당 길이의 단어가 없음
+        elif query.count('?') == query_len:
+            answer.append(tries[query_len].word_count)                   # Case2: 전체 와일드카드
+        elif query[0] == '?':
+            answer.append(inv_tries[query_len].count_match(query[::-1])) # Case3: 전위 와일드카드
+        else:
+            answer.append(tries[query_len].count_match(query))           # Case4: 후위 와일드카드 or 단어 매칭
+
+    return answer
+```
 
 
 ## 과제6. 2020 KAKAO BLIND RECRUITMENT
@@ -2914,6 +3082,44 @@ print(solution(n, weak, dist))
 ----
 
 
+### 과제6 답안(10/10)
+
+- Brute-force로 모든 가능성을 탐색하는 문제입니다.
+- 문제를 잘 해결해 주셨습니다! :) 아래 예시 답안도 확인해 주세요 :)
+
+```python
+from itertools import permutations
+def solution(n, weak, dist):
+    weak_length = len(weak)
+    for i in range(weak_length):
+        weak.append(weak[i] + n)
+   
+    answer = len(dist) + 1
+    for i in range(weak_length):
+        start_point = [weak[j] for j in range(i, i + weak_length)]
+        candidates = permutations(dist, len(dist))
+        
+        for order in candidates:
+            friend_idx, friend_count = 0, 1
+            possible_check_length = start_point[0] + order[friend_idx]
+            
+            for idx in range(weak_length):
+                if start_point[idx] > possible_check_length:
+                    friend_count += 1
+                    if friend_count > len(order):
+                        break
+
+                    friend_idx += 1
+                    possible_check_length = order[friend_idx] + start_point[idx]
+            answer = min(answer, friend_count)
+    
+    if answer > len(dist):
+        return -1
+    
+    return answer 
+```
+
+
 ## 과제7. 2019년 LINE 인턴 채용 코딩테스트 문제
 
 ----
@@ -2950,6 +3156,52 @@ print(solution(11, 2))
 ```
 
 ----
+
+
+### 과제7 답안(10/10)
+
+- 주어진 조건에 맞게 구현하는 시뮬레이션 문제입니다.
+- 문제를 잘 해결해 주셨습니다! 아래 예시 답안도 확인해 주세요 :)
+
+```python
+
+from collections import deque
+def solution(conyPosition, brownPosition):
+    time = 0
+    visit = [[0]*2 for _ in range(200001)]
+    q = deque()
+    q.append((brownPosition, 0))
+
+    while 1:
+        conyPosition += time
+
+        if conyPosition > 200000:
+            return -1
+        if visit[conyPosition][time%2]:
+            return time
+
+        for i in range(0, len(q)):
+            current = q.popleft()
+            currentPosition = current[0]
+            newTime = (current[1]+1)%2
+
+            newPosition = currentPosition - 1
+            if newPosition >= 0 and not visit[newPosition][newTime]:
+                visit[newPosition][newTime] = True
+                q.append((newPosition, newTime))
+
+            newPosition = currentPosition + 1
+            if newPosition < 200001 and not visit[newPosition][newTime]:
+                visit[newPosition][newTime] = True
+                q.append((newPosition, newTime))
+
+            newPosition = currentPosition * 2
+            if newPosition < 200001 and not visit[newPosition][newTime]:
+                visit[newPosition][newTime] = True
+                q.append((newPosition, newTime))
+        time+=1
+```
+
 
 ## 과제8. 삼성 SW 역량 테스트 유사 문제
 
@@ -3036,6 +3288,51 @@ print(solution(N, K, L, apples, moves))
 ```
 
 ----
+
+
+### 과제8 답안(0/10)
+
+- 주어진 상황에 맞게 시뮬레이션하는 문제입니다.
+- 아래 예시 답안을 확인해 주세요 :)
+
+```python
+def solution(N, K, L, apples, moves):
+    board=[[0]*(N+1) for i in range(N+1)]
+    for x, y in apples:
+        board[x][y] = 1
+
+    oper = moves
+    snake=[(1,1)]
+    d = [(0,1),(1,0),(0,-1),(-1,0)]
+    d_f=0
+    score=0
+    x,y=1,1
+
+    while True:
+        score+=1
+        x+=d[d_f][0]
+        y+=d[d_f][1]
+        if 1<=x<=N and 1<=y<=N:
+            snake.append((x, y))
+            for i in snake[:-1]:
+                if (x, y)==i:
+                    return score
+            if board[x][y]==0:
+                snake.pop(0)
+            if board[x][y]==1:
+                board[x][y]=0
+        else:
+            return score
+
+        if oper and score==int(oper[0][0]):
+            if oper[0][1]=='D':
+                d_f= (d_f+1) % 4
+                oper.pop(0)
+            elif oper[0][1]=='L':
+                d_f = (d_f - 1) % 4
+                oper.pop(0)
+```
+
 
 ## 과제9. 2020 카카오 인턴십
 
@@ -3124,6 +3421,39 @@ print(solution("50*6-3*2"))
 
 ----
 
+
+### 과제9 답안(10/10)
+
+- Brute-force와 분할정복법을 이용하여 해결하는 문제입니다.
+- 문제를 잘 해결해 주셨습니다! 아래 예시 답안도 확인해 주세요 :)
+
+```python
+from itertools import permutations
+
+def calc(priority, n, expression):
+    if n == 2:
+        return str(eval(expression))
+    if priority[n] == '*':
+        res = eval('*'.join([calc(priority, n+1, e) for e in expression.split('*')]))
+    if priority[n] == '+':
+        res = eval('+'.join([calc(priority, n+1, e) for e in expression.split('+')]))
+    if priority[n] == '-':
+        res = eval('-'.join([calc(priority, n+1, e) for e in expression.split('-')]))
+    return str(res)
+
+
+def solution(expression):
+    answer = 0
+    priorities = permutations(('*', '-', '+'))
+
+    for priority in priorities:
+        res = int(calc(priority, 0, expression))
+        answer = max(answer, abs(res))
+    
+    return answer
+```
+
+
 ## 과제10. 2020 카카오 인턴십
 
 ----
@@ -3197,3 +3527,49 @@ print(solution(gems))
 ```
 
 ----
+
+### 과제10 답안(10/10)
+
+- 해쉬테이블을 이용하여 효율적으로 비교하는 문제입니다.
+- 답안을 잘 작성해 주셨습니다! 아래 예시 답안도 확인해 주세요 :)
+
+```python
+def solution(gems):
+    n = len(set(gems))
+    
+    if n == 1:
+        return [1, 1]
+    
+    cur_dict = dict()
+    cand = list()
+    
+    left = 0
+    right = 0
+    cur_dict[gems[0]] = 1
+    is_cand = False
+    
+    while True:
+        if is_cand is True:
+            left += 1
+            cur_dict[gems[left - 1]] -= 1
+            if cur_dict[gems[left - 1]] == 0:
+                del cur_dict[gems[left - 1]]
+                is_cand = False
+            else:
+                cand.append([left + 1, right + 1])
+        else:
+            right += 1
+            
+            if right >= len(gems):
+                break
+            
+            if gems[right] not in cur_dict:
+                cur_dict[gems[right]] = 0
+            cur_dict[gems[right]] += 1
+            if len(cur_dict) == n:
+                is_cand = True
+                cand.append([left + 1, right + 1])
+    
+    cand.sort(key=lambda x: x[1] - x[0])
+    return cand[0]
+```

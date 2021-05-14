@@ -2498,6 +2498,43 @@ def solution(N):
 ```
 ----
 
+### 과제1 답안(0/25)
+
+- Tree의 특수한 형태를 다룰 수 있는지 묻는 문제였습니다.
+- 다양한 방법으로 풀 수 있으며, 아래와 같이 DFS로도 풀이가 가능합니다.
+
+예시 답안)
+
+```python
+def solution(N):
+    stack = []
+    stack.append((0, True)) # (level, ready)
+    count = 1
+
+    while stack:
+        level, ready = stack.pop()
+
+        if level >= N:
+            continue
+
+        if ready:
+            stack.append((level + 1, True))
+            stack.append((level + 1, False))
+            count += 2
+        else:
+            stack.append((level + 1, True))
+        
+    return count
+
+N = 2
+print(solution(N)) # 5
+
+N = 4
+print(solution(N)) # 15
+
+N = 8
+print(solution(N)) # 109
+```
 
 
 ## 과제2.
@@ -2530,6 +2567,48 @@ def solution(N, fry, clean, C)
 ----
 
 
+### 과제2 답안(0/25)
+
+- 이분 탐색을 이용하여 넓은 범위를 빠르게 탐색하는 문제입니다.
+- 특정 시간 안에 목표 달성이 가능한지 아닌지 여부를 구현한 후, 이분 탐색을 이용하면 됩니다.
+- 아래 예시 답안을 확인해 주세요 :)
+
+예시 답안)
+
+```python
+def solution(N, fry, clean, C):
+    left = 0
+    right = C * max([x+y for x, y in zip(fry, clean)])
+    answer = right
+
+    while left <= right:
+        mid = (left + right) // 2
+        
+        val = 0
+        for f, c in zip(fry, clean):
+            val += (mid + c) // (f + c)
+        
+        if val >= C:
+            right = mid - 1
+            answer = min(answer, mid)
+        else:
+            left = mid + 1
+
+    return answer
+
+N = 2
+fry = [3, 6]
+clean = [2, 1]
+C = 20
+print(solution(N, fry, clean, C))
+
+N = 4
+fry = [2, 2, 1, 3]
+clean = [2, 4, 3, 2]
+C = 2
+print(solution(N, fry, clean, C))
+```
+
 
 ## 과제3.
 
@@ -2561,6 +2640,61 @@ def solution(N, start, end, counts):
 ----
 
 
+### 과제3 답안(0/25)
+
+- 조건에 맞는 진수법을 구현하는 문제였습니다.
+- 딕셔너리를 이용하면 비교적 간단하게 구현이 가능합니다.
+- 아래 예시 답안을 확인해주세요!
+
+예시 답안)
+
+```python
+def solution(N, start, end, counts):
+    mapper = {
+        str(x):x for x in range(10)
+    }
+
+    offset = len(mapper)
+    mapper.update({
+        chr(x):x - ord('a') + offset for x in range(ord('a'), ord('z') + 1)
+    })
+
+    offset = len(mapper)
+    mapper.update({
+        chr(x):x - ord('A') + offset for x in range(ord('A'), ord('Z') + 1)
+    })
+
+    def todec(s):
+        val = 0
+        for i, n in enumerate(s[::-1]):
+            val += mapper[n] * N**i
+        return val
+
+    answer = 0
+    
+    start = todec(start)
+    end = todec(end)
+    for s, target in zip(counts, range(start, end + 1)):
+        print(todec(s))
+        if todec(s) != target:
+            answer += 1
+    
+    return answer
+
+
+N = 13
+start = '9'
+end = 'd'
+counts = ['9', 'a', 'c', 'd', 'e']
+print(solution(N, start, end, counts))
+
+N = 62
+start = 'Z'
+end = '12'
+counts = ['Z', '10', '11', '12'] 
+print(solution(N, start, end, counts))
+```
+
 
 ## 과제4.
 
@@ -2582,6 +2716,42 @@ def solution(N, K1, K2, W, V):
 ```
 
 ----
+
+
+### 과제4 답안(0/25)
+
+- 0-1 Knapsack 문제에서 한 차원을 추가한 응용 문제였습니다.
+- 3차원 배열로 DP 문제로 접근하시면 풀이가 가능합니다.
+- 아래 예시 답안을 확인해 주세요!
+
+예시 답안)
+
+```python
+def solution(N, K1, K2, W, V):
+    dp = [[[0 for _ in range(K2 + 1)]
+                for _ in range(K1 + 1)]
+                    for _ in range(2)]
+
+    for i in range(N):
+        for k1 in range(K1 + 1):
+            for k2 in range(K2 + 1):
+                val1, val2 = 0, 0
+                if k1 >= W[i]:
+                    val1 = dp[(i-1)%2][k1 - W[i]][k2] + V[i]
+                if k2 >= W[i]:
+                    val2 = dp[(i-1)%2][k1][k2 - W[i]] + V[i]
+                dp[i%2][k1][k2] = max(dp[(i-1)%2][k1][k2], val1, val2)
+
+    return dp[(N-1)%2][K1][K2]
+
+N = 4
+K1 = 3
+K2 = 8
+W = [1, 5, 6, 3]
+V = [5, 2, 14, 6]
+print(solution(N, K1, K2, W, V))
+```
+
 
 
 ### Final Report (2021/05/06 ~ 2021/05/09)

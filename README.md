@@ -1,5 +1,4 @@
 # AlgorithmReportNote
-Algorithm Report Note
 
 ### Quiz 1 (2021/03/18 ~ 2021/03/21)
 Q1. 다음 중 여러개의 데이터를 나열하는 데에 쓰이며, 한 번 정의된 후 데이터를 변경할 수 없는 자료형을 고르시오.
